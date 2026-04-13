@@ -108,7 +108,6 @@ export default function App() {
 ## Icons
 
 ```jsx
-import { Transform } from 'react-native' // not available — use style
 import { isRTL } from './rtl-helpers'
 
 // Flip directional icons

@@ -76,6 +76,27 @@ Every element falls into one of three categories:
 
 ---
 
+## Testing the skill
+
+A test harness verifies the skill catches issues correctly. It runs `/rtl-audit` on an intentionally broken component and fails if fewer than 22/24 issues are caught.
+
+```bash
+npm install
+ANTHROPIC_API_KEY=sk-... npm test
+```
+
+The component (`test/BadComponent.jsx`) contains 24 deliberate RTL bugs. Expected output: 16 breaking + 5 degraded + 3 cosmetic issues, with correct icon classification (5 directional flipped, 5 neutral untouched). Full scoring rubric: [`test/ANSWER_KEY.md`](test/ANSWER_KEY.md).
+
+---
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for how to fix rules, add frameworks, and submit PRs.
+
+The key rule: **`reference.md` and `workflows.md` must stay in sync** — if you add a rule to one, update the other.
+
+---
+
 ## License
 
 MIT

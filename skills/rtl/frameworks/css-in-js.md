@@ -88,11 +88,15 @@ const FlexRow = styled.div`
   gap: 1rem;
 `
 
-// Or with CSS variable approach (no re-render needed)
+// Or derive from dir attribute with CSS (no re-render needed)
+// Note: flex-direction is NOT auto-reversed by dir="rtl" — must be explicit
 const Container = styled.div`
   display: flex;
   flex-direction: row;
-  /* dir="rtl" on parent handles it — no JS needed */
+
+  [dir="rtl"] & {
+    flex-direction: row-reverse;
+  }
 `
 ```
 
