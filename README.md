@@ -1,4 +1,8 @@
 # rtl-skill 🔤
+![Stars](https://img.shields.io/github/stars/samuadda/rtl-skill?style=flat&color=orange)
+![Last Commit](https://img.shields.io/github/last-commit/samuadda/rtl-skill?style=flat&color=green)
+![License](https://img.shields.io/github/license/samuadda/rtl-skill?style=flat&color=yellow)
+![npm](https://img.shields.io/badge/install-npx%20skills%20add-blue?style=flat)
 
 **RTL-first UI for Arabic apps — one install, every agent.**
 
