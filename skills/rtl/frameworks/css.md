@@ -60,14 +60,19 @@ float: inline-end;
 ## Flexbox
 
 ```css
-/* For horizontal flex containers */
+/* flex-direction is NOT affected by dir="rtl" — must be handled explicitly */
+
+/* Option A — default to row-reverse (RTL-first apps) */
+.row {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+/* Option B — explicit per-direction (LTR/RTL switching apps) */
 .row {
   display: flex;
   flex-direction: row;
-  /* dir="rtl" on parent automatically reverses visual order */
 }
-
-/* When you need explicit control */
 [dir="rtl"] .row {
   flex-direction: row-reverse;
 }

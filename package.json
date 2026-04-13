@@ -1,0 +1,11 @@
+{
+  "name": "rtl-skill",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "node test/run-audit.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}
