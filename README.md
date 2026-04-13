@@ -10,17 +10,17 @@ A skill for AI coding agents that makes Arabic/RTL layout support automatic. Cov
 
 ```bash
 # Auto-detect your agent
-npx skills add [yourhandle]/rtl-skill
+npx skills add samuadda/rtl-skill
 
 # Specific agents
-npx skills add [yourhandle]/rtl-skill -a claude-code
-npx skills add [yourhandle]/rtl-skill -a cursor
-npx skills add [yourhandle]/rtl-skill -a windsurf
-npx skills add [yourhandle]/rtl-skill -a cline
-npx skills add [yourhandle]/rtl-skill -a copilot
+npx skills add samuadda/rtl-skill -a claude-code
+npx skills add samuadda/rtl-skill -a cursor
+npx skills add samuadda/rtl-skill -a windsurf
+npx skills add samuadda/rtl-skill -a cline
+npx skills add samuadda/rtl-skill -a copilot
 
 # Global (all projects)
-npx skills add [yourhandle]/rtl-skill -g
+npx skills add samuadda/rtl-skill -g
 ```
 
 ---
