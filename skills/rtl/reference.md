@@ -22,13 +22,14 @@ border-inline-start, border-inline-end
 float: inline-start / inline-end
 ```
 
-**Flexbox:** `flex-direction: row` reads left-to-right — wrong for RTL.
+**Flexbox:** `flex-direction` is NOT affected by `dir="rtl"` — the browser does not auto-reverse it. You must handle it explicitly.
 ```css
-/* Option A — explicit RTL default */
+/* Option A — default to row-reverse (correct for RTL-first apps) */
 .container { flex-direction: row-reverse; }
 
-/* Option B — use logical values (preferred when supported) */
-.container { flex-direction: row; } /* + dir="rtl" on parent handles it */
+/* Option B — explicit per-direction (for LTR/RTL switching apps) */
+.container { flex-direction: row; }
+[dir="rtl"] .container { flex-direction: row-reverse; }
 ```
 
 **Absolute positioning:**
@@ -308,7 +309,115 @@ select {
 
 ---
 
-## 7. Data & Tables
+## 7. CSS Grid
+
+CSS Grid column order is affected by `dir="rtl"` — column 1 becomes the rightmost column automatically when `dir="rtl"` is set on the container. Use this, don't fight it.
+
+### Column order
+```css
+/* dir="rtl" on the grid container reverses column flow automatically */
+/* No extra rules needed for simple grids */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+```
+
+### Named template areas
+Named areas do NOT auto-mirror — redefine them explicitly:
+```css
+.layout {
+  display: grid;
+  grid-template-areas:
+    "sidebar main"
+    "sidebar footer";
+}
+
+[dir="rtl"] .layout {
+  grid-template-areas:
+    "main sidebar"
+    "footer sidebar";
+}
+```
+
+### Logical column placement
+```css
+/* NEVER */
+.item { grid-column: 1 / 3; } /* hardcoded column numbers break in RTL */
+
+/* PREFER — named areas or auto-placement */
+.sidebar { grid-area: sidebar; }
+.main    { grid-area: main; }
+```
+
+### Grid gap and alignment
+```css
+/* gap is direction-agnostic — safe to use as-is */
+.grid { gap: 1rem; }
+
+/* justify-items and justify-self respect writing direction */
+.item { justify-self: start; } /* not left */
+```
+
+---
+
+## 8. Scroll Behavior
+
+### scrollLeft in RTL
+`scrollLeft` behavior differs by browser in RTL contexts:
+- Chrome/Edge: `scrollLeft` is negative (0 at right edge, negative toward left)
+- Firefox: `scrollLeft` is positive (0 at right edge)
+- Always use `scrollIntoView` or `scrollTo` with `behavior: 'smooth'` instead of manipulating `scrollLeft` directly
+
+```js
+// SAFE — works in both directions
+element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+
+// RISKY — scrollLeft sign differs by browser in RTL
+container.scrollLeft = 0;
+
+// If you must use scrollLeft, normalize it:
+function getScrollLeft(el) {
+  const dir = getComputedStyle(el).direction;
+  return dir === 'rtl' ? -el.scrollLeft : el.scrollLeft;
+}
+```
+
+### scroll-snap in RTL
+```css
+.carousel {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  /* dir="rtl" on container reverses snap point order automatically */
+}
+
+.slide {
+  scroll-snap-align: start; /* "start" is RTL-aware — use it, not "left" */
+  flex-shrink: 0;
+  width: 100%;
+}
+```
+
+### Sticky positioning
+```css
+/* Use logical properties — sticky respects writing direction */
+.sticky-header {
+  position: sticky;
+  inset-block-start: 0; /* top */
+  /* NOT: top: 0 — this actually works fine, block axis is unaffected by RTL */
+}
+
+.sticky-sidebar {
+  position: sticky;
+  inset-block-start: 1rem;
+  /* inset-inline-start is safe here too */
+}
+```
+
+---
+
+## 9. Data & Tables
 
 ### Column order
 In RTL, tables read right-to-left. First column is rightmost.

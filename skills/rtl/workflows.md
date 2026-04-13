@@ -55,8 +55,11 @@ body {
 
 **3. Font loading**
 ```html
+<!-- Quick start (prototypes only — has latency + privacy tradeoffs) -->
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 ```
+> **Production:** self-host fonts using [fontsource](https://fontsource.org/fonts/cairo) or download and serve from your own CDN. Google Fonts adds a cross-origin request and is blocked in some regions.
+
 Preferred Arabic fonts in order: Cairo → Tajawal → IBM Plex Arabic → Noto Kufi Arabic
 
 **4. RTL config file**
