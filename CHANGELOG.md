@@ -8,6 +8,16 @@ Format: [Semantic Versioning](https://semver.org). Types: `Added`, `Fixed`, `Cha
 
 ## [Unreleased]
 
+### Added
+- CI structure validator (`test/validate.mjs`) — zero-dependency, no API key required; checks required files, SKILL.md frontmatter, internal link resolution, CHANGELOG structure, and `package.json`/CHANGELOG version drift
+- GitHub Actions workflow (`.github/workflows/validate.yml`) — runs the validator on every push and PR to `main`
+- `npm run validate` script
+- Project logo (`assets/logo.svg`) and centered README header layout
+- Arabic translation (`README.ar.md`) linked from the English README
+
+### Changed
+- `package.json` version bumped from `1.0.0` to `1.1.0` to match the CHANGELOG
+
 ---
 
 ## [1.1.0] — 2026-04-13
