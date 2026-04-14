@@ -1,8 +1,9 @@
 {
   "name": "rtl-skill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "type": "module",
   "scripts": {
+    "validate": "node test/validate.mjs",
     "test": "node test/run-audit.mjs"
   },
   "dependencies": {
