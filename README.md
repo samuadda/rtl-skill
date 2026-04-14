@@ -11,6 +11,8 @@
 
 **RTL-first UI for Arabic apps — one install, every agent.**
 
+[اقرأ بالعربية](README.ar.md)
+
 A skill for AI coding agents that makes Arabic/RTL layout support automatic. Covers layout mirroring, CSS logical properties, Arabic typography, directional components, icons, animations, and forms.
 
 </div>
