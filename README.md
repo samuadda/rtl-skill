@@ -1,4 +1,9 @@
-# rtl-skill 🔤
+<div align="center">
+
+<img src="assets/logo.svg" alt="rtl-skill logo" width="420"/>
+
+# rtl-skill
+
 ![Stars](https://img.shields.io/github/stars/samuadda/rtl-skill?style=flat&color=orange)
 ![Last Commit](https://img.shields.io/github/last-commit/samuadda/rtl-skill?style=flat&color=green)
 ![License](https://img.shields.io/github/license/samuadda/rtl-skill?style=flat&color=yellow)
@@ -7,6 +12,8 @@
 **RTL-first UI for Arabic apps — one install, every agent.**
 
 A skill for AI coding agents that makes Arabic/RTL layout support automatic. Covers layout mirroring, CSS logical properties, Arabic typography, directional components, icons, animations, and forms.
+
+</div>
 
 ---
 
