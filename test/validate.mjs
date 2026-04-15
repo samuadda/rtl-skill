@@ -61,8 +61,9 @@ for (const f of REQUIRED_FILES) {
 // --- 2. SKILL.md has valid frontmatter ---
 
 check('SKILL.md frontmatter', () => {
-  const src = readFileSync(join(root, 'skills/rtl/SKILL.md'), 'utf8');
-  const match = src.match(/^---\n([\s\S]*?)\n---/);
+  const src = readFileSync(join(root, 'skills/rtl/SKILL.md'), 'utf8')
+    .replace(/^\ufeff/, ''); // strip UTF-8 BOM if present
+  const match = src.match(/^---\r?\n([\s\S]*?)\r?\n---/);
   if (!match) throw new Error('no frontmatter block');
   const body = match[1];
   if (!/^name:\s*\S+/m.test(body)) throw new Error('missing `name:` field');
