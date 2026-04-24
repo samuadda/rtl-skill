@@ -14,7 +14,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
-      # No `npm install` — the validator has zero runtime dependencies
-      # and we don't want CI to need ANTHROPIC_API_KEY or pull the SDK.
+      # No `npm install` — the validator has zero runtime dependencies.
       - name: Run structure validator
         run: node test/validate.mjs

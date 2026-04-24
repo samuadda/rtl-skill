@@ -87,14 +87,13 @@ Every element falls into one of three categories:
 
 ## Testing the skill
 
-A test harness verifies the skill catches issues correctly. It runs `/rtl-audit` on an intentionally broken component and fails if fewer than 22/24 issues are caught.
+Run `/rtl-audit test/BadComponent.jsx` inside Claude Code and grade the output against [`test/ANSWER_KEY.md`](test/ANSWER_KEY.md). The component contains 24 deliberate RTL bugs (16 breaking + 5 degraded + 3 cosmetic) and expects 5 directional icons flipped, 5 neutral icons untouched. A score of 22+ with correct icon classification = skill working.
+
+Structure sanity check (no API, no dependencies):
 
 ```bash
-npm install
-ANTHROPIC_API_KEY=sk-... npm test
+npm run validate
 ```
-
-The component (`test/BadComponent.jsx`) contains 24 deliberate RTL bugs. Expected output: 16 breaking + 5 degraded + 3 cosmetic issues, with correct icon classification (5 directional flipped, 5 neutral untouched). Full scoring rubric: [`test/ANSWER_KEY.md`](test/ANSWER_KEY.md).
 
 ---
 

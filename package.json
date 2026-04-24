@@ -4,9 +4,6 @@
   "type": "module",
   "scripts": {
     "validate": "node test/validate.mjs",
-    "test": "node test/run-audit.mjs"
-  },
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.39.0"
+    "test": "node test/validate.mjs"
   }
 }

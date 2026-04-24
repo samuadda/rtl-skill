@@ -15,8 +15,13 @@ Format: [Semantic Versioning](https://semver.org). Types: `Added`, `Fixed`, `Cha
 - Project logo (`assets/logo.svg`) and centered README header layout
 - Arabic translation (`README.ar.md`) linked from the English README
 
+### Removed
+- `test/run-audit.mjs` and its `@anthropic-ai/sdk` dependency — the skill runs inside Claude Code for free, so the paid API-based regression test was removed. Behaviour testing is now a manual `/rtl-audit test/BadComponent.jsx` run graded against `test/ANSWER_KEY.md`
+- `.github/ISSUE_TEMPLATE/test-score.md` — obsolete without the audit script
+
 ### Changed
 - `package.json` version bumped from `1.0.0` to `1.1.0` to match the CHANGELOG
+- `npm test` now runs the structure validator (was the paid audit)
 
 ---
 

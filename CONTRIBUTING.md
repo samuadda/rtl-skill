@@ -38,7 +38,7 @@ Breaking this sync is the most common mistake — the agent knows a rule exists 
 1. Find the rule in `reference.md` or the relevant `frameworks/*.md` file
 2. Correct it with a code example showing the right behaviour
 3. If the fix changes what the audit should catch, update `test/ANSWER_KEY.md`
-4. Run the audit test to verify: `ANTHROPIC_API_KEY=sk-... npm test`
+4. Run `/rtl-audit test/BadComponent.jsx` in Claude Code and grade against `test/ANSWER_KEY.md`
 
 ### Add a missing rule
 
@@ -63,19 +63,17 @@ All CSS examples must use **logical properties** (`inline-start/end`, not `left/
 
 ## Testing
 
+Structure check (runs in CI, no API key, no dependencies):
+
 ```bash
-npm install
-ANTHROPIC_API_KEY=sk-... npm test
+npm run validate
 ```
 
-The test calls the Claude API (costs ~$0.01 per run with Haiku). A score of 22+ issues caught with correct icon classification = passing.
+Behaviour check (manual, free — runs inside Claude Code):
 
-To use a more capable model:
-```bash
-AUDIT_MODEL=claude-sonnet-4-6 ANTHROPIC_API_KEY=sk-... npm test
-```
-
-**Never commit your `ANTHROPIC_API_KEY`** — pass it via environment variable only, never hardcode it in any file.
+1. Open this repo in Claude Code
+2. Run `/rtl-audit test/BadComponent.jsx`
+3. Grade the output against `test/ANSWER_KEY.md` — 22+ issues caught with correct icon classification = passing
 
 ## Submitting a PR
 
