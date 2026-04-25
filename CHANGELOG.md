@@ -15,6 +15,9 @@ Format: [Semantic Versioning](https://semver.org). Types: `Added`, `Fixed`, `Cha
 - Project logo (`assets/logo.svg`) and centered README header layout
 - Arabic translation (`README.ar.md`) linked from the English README
 
+### Added (cont.)
+- `examples/sample-audit.md` — real `/rtl-audit` output from a public Next.js template (shadcn-ui/next-template), kept as reference for what a clean-codebase audit looks like
+
 ### Removed
 - `test/run-audit.mjs` and its `@anthropic-ai/sdk` dependency — the skill runs inside Claude Code for free, so the paid API-based regression test was removed. Behaviour testing is now a manual `/rtl-audit test/BadComponent.jsx` run graded against `test/ANSWER_KEY.md`
 - `.github/ISSUE_TEMPLATE/test-score.md` — obsolete without the audit script
