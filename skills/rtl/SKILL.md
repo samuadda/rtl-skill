@@ -24,6 +24,85 @@ When in doubt: mirror it. It's easier to un-mirror than to discover it was wrong
 
 ---
 
+## Forbidden Workarounds
+
+**Violating the letter of these rules is violating the spirit. If you're rationalizing an exception, you're wrong.**
+
+Under pressure, agents reach for shortcuts that ship the change without solving the RTL problem. Don't. For each forbidden pattern below, the correct substitute is named — use it.
+
+### 1. Don't match existing physical-property style "for consistency"
+**Forbidden:**
+```css
+.card { margin-left: 16px; } /* matches the rest of the file */
+```
+**Do instead:** Convert as you go. The codebase migrates one file at a time.
+```css
+.card { margin-inline-start: 16px; }
+```
+
+### 2. Don't add `!important` to override RTL bugs
+**Forbidden:**
+```css
+.sidebar { left: 0 !important; } /* force-pin to "fix" RTL */
+```
+**Do instead:** Fix the underlying property.
+```css
+.sidebar { inset-inline-start: 0; }
+```
+
+### 3. Don't wrap sections in `direction: ltr` to dodge mirroring decisions
+**Forbidden:**
+```jsx
+<section style={{ direction: 'ltr' }}>{/* whole feature */}</section>
+```
+**Do instead:** Mark only the specific LTR island — a number, code snippet, or URL.
+```jsx
+<p>الرصيد: <span dir="ltr" style={{display: 'inline-block'}}>$1,250.00</span></p>
+```
+
+### 4. Don't use `transform: scaleX(-1)` on text
+**Forbidden:**
+```css
+[dir="rtl"] .heading { transform: scaleX(-1); } /* mirrors the glyphs */
+```
+**Do instead:** `scaleX(-1)` is for **directional icons only**. For layout, use logical properties; for text alignment, use `text-align: start`/`end`.
+
+### 5. Don't manipulate Arabic strings by character index
+**Forbidden:**
+```js
+const initial = name.charAt(0); // breaks combined letterforms and tashkeel
+```
+**Do instead:** Use grapheme-aware APIs.
+```js
+const initial = [...new Intl.Segmenter('ar', { granularity: 'grapheme' }).segment(name)][0]?.segment;
+```
+
+### 6. Don't set positive `letter-spacing` on Arabic — ever
+**Forbidden:**
+```css
+.brand { letter-spacing: 0.05em; } /* "for design reasons" */
+```
+**Do instead:** Always `0` on Arabic text. If the design needs visual emphasis, use weight, size, or color — not spacing. Arabic is cursive; spacing breaks letter connections.
+```css
+.brand { letter-spacing: 0; font-weight: 700; }
+```
+
+### 7. Don't skip root `dir="rtl"` and set direction per-component
+**Forbidden:**
+```jsx
+<html><body>
+  <Header dir="rtl" /><Main dir="rtl" /><Footer dir="rtl" />
+</body></html>
+```
+**Do instead:** Set direction once on the root. Per-component `dir` is reserved for LTR islands inside an RTL document.
+```jsx
+<html lang="ar" dir="rtl"><body>
+  <Header /><Main /><Footer />
+</body></html>
+```
+
+---
+
 ## Commands
 
 See [workflows.md](workflows.md) for full command definitions.
