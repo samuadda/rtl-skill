@@ -19,9 +19,9 @@
       --text: #1c1c1a;
       --text-dim: #6b6b66;
       --text-muted: #9b9b96;
-      --accent: #5b51f5;
-      --accent-hover: #4a41e0;
-      --accent-tint: rgba(91, 81, 245, 0.07);
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --accent-tint: rgba(37, 99, 235, 0.07);
       --accent-2: #0891b2;
       --accent-2-tint: rgba(8, 145, 178, 0.08);
       --danger: #dc2626;
@@ -156,7 +156,7 @@
       text-transform: uppercase;
       color: var(--accent);
       background: var(--accent-tint);
-      border: 1px solid rgba(91, 81, 245, 0.18);
+      border: 1px solid rgba(37, 99, 235, 0.18);
       padding: 5px 12px;
       border-radius: 999px;
       margin-bottom: 28px;
@@ -204,12 +204,12 @@
     .btn-primary {
       background: var(--accent);
       color: #fff;
-      box-shadow: 0 2px 8px rgba(91, 81, 245, 0.28), 0 1px 2px rgba(91, 81, 245, 0.2);
+      box-shadow: 0 2px 8px rgba(37, 99, 235, 0.28), 0 1px 2px rgba(91, 81, 245, 0.2);
     }
     .btn-primary:hover {
       background: var(--accent-hover);
       transform: translateY(-1px);
-      box-shadow: 0 4px 16px rgba(91, 81, 245, 0.3);
+      box-shadow: 0 4px 16px rgba(37, 99, 235, 0.3);
       text-decoration: none;
     }
     .btn-ghost {
@@ -319,7 +319,7 @@
     }
     .card:hover {
       border-color: rgba(91, 81, 245, 0.35);
-      box-shadow: var(--shadow), 0 0 0 3px rgba(91, 81, 245, 0.06);
+      box-shadow: var(--shadow), 0 0 0 3px rgba(37, 99, 235, 0.06);
       transform: translateY(-2px);
     }
     .card-cmd {
@@ -431,7 +431,10 @@
         <a href="#install" data-i18n="nav.install">Install</a>
         <a href="#commands" data-i18n="nav.commands">Commands</a>
         <a href="#coverage" data-i18n="nav.coverage">Coverage</a>
-        <a href="https://github.com/samuadda/rtl-skill" target="_blank" rel="noopener">GitHub</a>
+        <a href="https://github.com/samuadda/rtl-skill" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:5px;">
+          <img src="github.svg" alt="" width="15" height="15" style="opacity:0.6;filter:invert(0.3)" />
+          GitHub
+        </a>
         <button class="lang-toggle" id="langToggle">العربية</button>
       </div>
     </div>
