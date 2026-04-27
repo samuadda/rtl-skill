@@ -21,6 +21,8 @@ A skill for AI coding agents that makes Arabic/RTL layout support automatic. Cov
 
 ## Install
 
+### Recommended (via the `skills` CLI)
+
 ```bash
 # Auto-detect your agent
 npx skills add samuadda/rtl-skill
@@ -35,6 +37,27 @@ npx skills add samuadda/rtl-skill -a copilot
 # Global (all projects)
 npx skills add samuadda/rtl-skill -g
 ```
+
+### Manual install (fallback)
+
+If the `skills` CLI isn't available or doesn't resolve, copy the skill directory directly:
+
+```bash
+# Claude Code — project-scoped
+git clone --depth 1 https://github.com/samuadda/rtl-skill.git /tmp/rtl-skill
+mkdir -p .claude/skills
+cp -R /tmp/rtl-skill/skills/rtl .claude/skills/
+
+# Claude Code — global
+mkdir -p ~/.claude/skills
+cp -R /tmp/rtl-skill/skills/rtl ~/.claude/skills/
+
+# Cursor / Windsurf / Cline — point your agent's skill loader at
+# the cloned skills/rtl/ directory; consult your agent's docs for the
+# exact path (typically .cursor/skills/, .windsurf/skills/, etc).
+```
+
+After install, verify with: `ls .claude/skills/rtl/SKILL.md` (or the equivalent path for your agent). The agent picks up the skill on next conversation.
 
 ---
 
@@ -94,6 +117,44 @@ Structure sanity check (no API, no dependencies):
 ```bash
 npm run validate
 ```
+
+---
+
+## Evals
+
+The skill ships with a 28-query trigger eval suite that measures whether the agent correctly invokes the skill from a given user prompt. Mix of direct mentions ("make this RTL"), indirect signals ("Saudi users"), slash commands, and false-positive edge cases ("translate to Arabic", "right-click context menu").
+
+- **Latest pass rate: 28 / 28 (100%)** after one description-tuning iteration.
+- See [`evals/results.md`](evals/results.md) for the full table and iteration log.
+- See [`evals/README.md`](evals/README.md) for how to re-run manually (no API key required).
+
+---
+
+## Tested on
+
+The skill was stress-tested against a real public component library:
+
+- **Target:** [shadcn-ui/ui](https://github.com/shadcn-ui/ui) @ `fd0e0c3` — `apps/v4/registry/new-york-v4/ui/*.tsx` (56 component files).
+- **Findings:** 22 RTL issues — 11 breaking, 6 degraded, 5 cosmetic. 42 of 56 files contained at least one physical-property utility.
+- **Coverage:** the skill caught all physical margin/padding/positioning leaks, directional-icon misuse in pagination/breadcrumb, sheet slide-direction bugs, and `tracking-*` on text. It missed component APIs that take `"left" | "right"` as prop values (Sheet, Sidebar, MUI Drawer) — fixed in the same pass.
+
+Full report: [`tests/real-world-audit.md`](tests/real-world-audit.md). Gaps surfaced and how they were addressed: [`tests/gaps-found.md`](tests/gaps-found.md).
+
+---
+
+## What's NOT covered
+
+This skill stays focused on layout, typography, components, and animations for RTL UI. It does **not** cover:
+
+- **Complex data visualizations** — D3 charts, force-directed graphs, custom SVG dashboards. Axis direction, tooltip placement, and legend ordering are domain decisions.
+- **Map UIs** — Mapbox, Google Maps, Leaflet. Map tiles aren't mirrored (geography is geography); only the chrome around them is RTL.
+- **Video / audio players with directional controls** — scrub bars and chapter markers mix temporal direction (always LTR) with spatial UI direction.
+- **Game UIs / canvas-rendered scenes** — anything drawn imperatively to `<canvas>` or WebGL. CSS direction does not reach into canvas.
+- **PDF viewers and document renderers** — page layout is fixed by the source document; the viewer chrome is RTL but the content is not.
+- **Animation-heavy marketing pages** — bespoke parallax, scroll-linked timelines, custom Lottie files. Each animation needs a designer call, not a generic flip.
+- **Content translation** — this skill is for layout work. Translating English copy to Arabic is a different task — agents should not invoke `rtl-skill` for it.
+
+When you hit one of these, the agent will flag it for human review with the specific RTL decisions that need a call. See [`skills/rtl/reference.md`](skills/rtl/reference.md) → "Out of scope — escalate" for the full list.
 
 ---
 
