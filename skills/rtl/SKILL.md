@@ -56,16 +56,35 @@ Run this on every component before considering it done:
 
 ---
 
+## Framework Detection
+
+Run these checks from the repo root before loading any framework file. Each check is mechanical — no judgment. Multiple checks may pass; load every framework file that matches.
+
+| Framework | Check (any one passes → match) |
+|-----------|-------------------------------|
+| **Tailwind** | `grep -E '"tailwindcss"\s*:' package.json` returns a line, OR `ls tailwind.config.js tailwind.config.ts tailwind.config.cjs tailwind.config.mjs 2>/dev/null` lists any file |
+| **CSS-in-JS** | `grep -E '"(styled-components\|@emotion/react\|@emotion/styled)"\s*:' package.json` returns a line |
+| **React Native** | `grep -E '"react-native"\s*:' package.json` returns a line. The dep `react-native-web` alone does NOT match — it's web-only. Require the bare `"react-native":` key |
+| **Plain CSS / SCSS** | Fallback when none of the above match, OR repo contains `.css`/`.scss`/`.sass` files outside `node_modules` (`find . -type f \( -name '*.css' -o -name '*.scss' -o -name '*.sass' \) -not -path '*/node_modules/*' \| head -1`) used for non-framework styles |
+
+Concrete decision flow:
+1. Read `package.json` once. Cache the dependency list.
+2. Run each check above against that list (and the file checks for Tailwind).
+3. Build a set of matched frameworks. Load every matching file from `## Framework Rules` below.
+4. If the set is empty, default to `frameworks/css.md`.
+
+A Next.js + Tailwind + styled-components project loads **three** files: `tailwind.md`, `css-in-js.md`, and `css.md` (for any unscoped global styles).
+
+---
+
 ## Framework Rules
 
-Detect the project's framework and load the relevant file:
+Load the file(s) selected by detection above:
 
-- Tailwind CSS detected → load [frameworks/tailwind.md](frameworks/tailwind.md)
-- Plain CSS / SCSS → load [frameworks/css.md](frameworks/css.md)
-- styled-components / emotion / CSS-in-JS → load [frameworks/css-in-js.md](frameworks/css-in-js.md)
-- React Native → load [frameworks/react-native.md](frameworks/react-native.md)
-
-Multiple frameworks may apply. Load all that match.
+- Tailwind CSS → [frameworks/tailwind.md](frameworks/tailwind.md)
+- Plain CSS / SCSS → [frameworks/css.md](frameworks/css.md)
+- styled-components / emotion / CSS-in-JS → [frameworks/css-in-js.md](frameworks/css-in-js.md)
+- React Native → [frameworks/react-native.md](frameworks/react-native.md)
 
 ---
 
