@@ -2,6 +2,22 @@
 
 ---
 
+## Version Assumptions
+
+Logical-property baseline support (caniuse, accurate as of 2026):
+
+- **`margin-inline-start`/`-end`, `padding-inline-*`, `inset-inline-*`, `border-inline-*`:** Safari 14.1+, Chrome 87+, Firefox 66+, Edge 87+. Safe to use unprefixed.
+- **`text-align: start | end`:** universal — Safari 12+, Chrome 1+, Firefox 1+.
+- **`float: inline-start | inline-end`:** Safari 15+, Chrome 118+, Firefox 66+. Newer than the others — fall back to `[dir="rtl"] .x { float: right; }` if you must support Chrome <118.
+- **`border-start-start-radius` / `border-start-end-radius` / `border-end-start-radius` / `border-end-end-radius`:** Safari 15+, Chrome 89+, Firefox 66+. The corner-radius logical properties lag a release behind the inline ones — assume Safari 15 as your floor.
+- **`scroll-padding-inline-*` / `scroll-margin-inline-*`:** Safari 14.1+, Chrome 87+, Firefox 68+.
+
+If your support matrix includes browsers older than the floors above, fall back to `[dir="rtl"]` selectors with physical properties — but document the version target in the project README so future contributors don't strip the fallbacks.
+
+If you can't determine the support matrix, default to the most recent stable browser baseline and flag the assumption to the user.
+
+---
+
 ## Core strategy: logical properties + dir attribute
 
 Set `dir="rtl"` on the root, then use CSS logical properties everywhere. The browser does the mirroring automatically.

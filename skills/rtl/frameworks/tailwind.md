@@ -2,6 +2,24 @@
 
 ---
 
+## Version Assumptions
+
+- **Minimum: Tailwind v3.3.** First version with native `ms`/`me`/`ps`/`pe`/`start`/`end` logical utilities. Below v3.3 these classes don't exist — you'll see "Unknown class" errors at build.
+- **Recommended: Tailwind v3.4+.** Stable RTL tooling, all logical utility variants available (`rounded-s`, `border-s`, etc.).
+- **Tailwind v4 (different config model):**
+  - `tailwind.config.js` is no longer the primary config. Configuration moves into CSS via the `@theme` directive: `@theme { --font-arabic: 'Cairo', sans-serif; }`.
+  - Plugin-style config still works but is opt-in.
+  - The `rtl:` variant and all `s`/`e` utilities behave the same as v3.4.
+  - Detection: presence of `@import "tailwindcss";` (v4) vs `@tailwind base; @tailwind components; @tailwind utilities;` (v3) in the entry CSS.
+- **Known gotchas:**
+  - `space-x-*` reverses awkwardly under `dir="rtl"` even in v3.4 — prefer `gap-*` with `flex`.
+  - `divide-x-*` borders render on the visual right in both directions; use `divide-x-reverse` in RTL.
+- **Older than v3.3?** See the "Legacy: pre-v3.3 fallback" section at the bottom.
+
+If you can't determine the project's Tailwind version (no lockfile, monorepo without local `package.json`), default to the most recent stable (v3.4) and flag the assumption to the user before generating.
+
+---
+
 ## Core approach
 
 Tailwind has built-in RTL support via the `rtl:` variant. Use it alongside logical property utilities.
@@ -121,6 +139,38 @@ module.exports = {
 ```jsx
 <html dir="rtl" className="font-arabic">
 ```
+
+---
+
+## Legacy: pre-v3.3 fallback
+
+If the project pins Tailwind below v3.3, the `s`/`e` utilities are missing. Two options:
+
+**Option A — upgrade.** Tailwind v3.3 → v3.4 is a non-breaking minor bump for almost all projects.
+
+**Option B — extend the config with logical utilities manually:**
+```js
+// tailwind.config.js (v3.0–v3.2)
+const plugin = require('tailwindcss/plugin')
+
+module.exports = {
+  plugins: [
+    plugin(({ addUtilities, theme }) => {
+      const spacing = theme('spacing')
+      const utils = {}
+      Object.entries(spacing).forEach(([k, v]) => {
+        utils[`.ms-${k}`] = { 'margin-inline-start': v }
+        utils[`.me-${k}`] = { 'margin-inline-end': v }
+        utils[`.ps-${k}`] = { 'padding-inline-start': v }
+        utils[`.pe-${k}`] = { 'padding-inline-end': v }
+      })
+      addUtilities(utils)
+    }),
+  ],
+}
+```
+
+The `rtl:` variant itself ships from v3.0+ — only the logical utility classes need backfilling.
 
 ---
 

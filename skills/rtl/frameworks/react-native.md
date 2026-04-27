@@ -2,6 +2,21 @@
 
 ---
 
+## Version Assumptions
+
+- **Minimum: React Native 0.65.** First version with native `marginStart`/`marginEnd`/`paddingStart`/`paddingEnd`/`start`/`end` style props that respect `I18nManager.isRTL` automatically. Below 0.65 these props don't exist — you must compute every directional value through the `rtlValue()` helper.
+- **Recommended: RN 0.71+.** Stable Yoga 1.19 layout, fewer RTL edge cases around nested ScrollViews.
+- **Known gotchas across versions:**
+  - `I18nManager.forceRTL(true)` requires a full app reload to take effect — `RNRestart.Restart()` or kill-and-relaunch. This is true on every version.
+  - On RN 0.71+, `transform` arrays do not auto-flip; sign your `translateX` against `I18nManager.isRTL` manually.
+  - `FlatList` `inverted` prop combined with `I18nManager.isRTL` double-flips the scroll direction. Pick one.
+  - Hermes engine (default on RN 0.70+) handles Arabic strings correctly, but `String.prototype.charAt` still cuts code units, not graphemes — use `Intl.Segmenter` (available on Hermes 0.12+, ships with RN 0.74+).
+- **Older than 0.65?** See the "Legacy: pre-0.65 fallback" section at the bottom.
+
+If you can't determine the project's RN version (no `package.json` in scope), default to the latest stable (RN 0.74) and flag the assumption to the user before generating.
+
+---
+
 ## Core setup
 
 ```js
@@ -178,3 +193,30 @@ const slideStyle = {
 3. **Forgetting reload after `forceRTL`** — styles don't update without restart
 4. **Positive `letterSpacing` on Arabic text** — always 0
 5. **Not flipping scroll indicators** in horizontal ScrollViews
+
+---
+
+## Legacy: pre-0.65 fallback
+
+On RN < 0.65, `marginStart` / `marginEnd` / `paddingStart` / `paddingEnd` / `start` / `end` do not exist. Every directional value must go through the `rtlValue()` helper.
+
+```js
+import { I18nManager, StyleSheet } from 'react-native'
+
+const isRTL = I18nManager.isRTL
+export const rtlValue = (ltr, rtl) => (isRTL ? rtl : ltr)
+
+const styles = StyleSheet.create({
+  card: {
+    // No marginStart on this version — fall back to physical props + helper
+    marginLeft: rtlValue(16, 0),
+    marginRight: rtlValue(0, 16),
+    paddingLeft: rtlValue(12, 0),
+    paddingRight: rtlValue(0, 12),
+    borderLeftWidth: rtlValue(2, 0),
+    borderRightWidth: rtlValue(0, 2),
+  },
+})
+```
+
+Upgrade to 0.65+ when feasible — the helper-everywhere pattern is verbose and easy to forget on new components.
