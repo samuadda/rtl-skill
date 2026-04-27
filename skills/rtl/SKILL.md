@@ -167,6 +167,12 @@ Load the file(s) selected by detection above:
 
 ---
 
+## Common Mistakes
+
+Before generating, scan [anti-patterns.md](anti-patterns.md) for patterns to avoid. Especially relevant when working on existing code — most anti-patterns survive code review because nothing fails loudly.
+
+---
+
 ## Full Rules Reference
 
 For deep rules on each concern area → [reference.md](reference.md)
