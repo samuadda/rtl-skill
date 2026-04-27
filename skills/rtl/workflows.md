@@ -134,26 +134,113 @@ Flag this as a required project decision:
 - Hardcoded LTR punctuation in Arabic content
 
 ### Report format
-Write to `rtl-audit-report.md`:
 
-```markdown
+Write to `rtl-audit-report.md`. **When generating the report, follow this template exactly. Every issue must include all six fields (file:line, severity tag, issue title, Current, Fix, Why). Don't omit fields when the value seems obvious — consistency across reports is the point.**
+
+````markdown
 # RTL Audit Report
-Generated: [date]
-Path audited: [path]
+Generated: 2026-04-27
+Path audited: apps/web/src
 
 ## Summary
-- 🔴 Breaking: X issues
-- 🟡 Degraded: Y issues  
-- 🟢 Cosmetic: Z issues
+- 🔴 Breaking: 3 issues
+- 🟡 Degraded: 2 issues
+- 🟢 Cosmetic: 2 issues
+- **Total:** 7 issues across 5 files
 
 ## Issues
 
-### 🔴 [filename]:[line] — [issue title]
-**Current:** `margin-left: 16px`
-**Fix:** `margin-inline-start: 16px`
-
-...
+### 🔴 components/Sidebar.tsx:24 — Hardcoded `left` on absolute-positioned drawer
+**Current:**
+```tsx
+<aside className="absolute left-0 top-0 h-full w-72 border-r">
 ```
+**Fix:**
+```tsx
+<aside className="absolute start-0 top-0 h-full w-72 border-e">
+```
+**Why:** `left-0` and `border-r` pin the drawer to the physical left edge in both directions. In RTL the drawer should open from the right — use `start-0` and `border-e` so the browser mirrors automatically.
+
+### 🔴 components/Pagination.tsx:41 — Directional chevron not flipped
+**Current:**
+```tsx
+<button onClick={next} aria-label="next">
+  <ChevronRight className="h-4 w-4" />
+</button>
+```
+**Fix:**
+```tsx
+<button onClick={next} aria-label="next">
+  <ChevronRight className="h-4 w-4 rtl:rotate-180" />
+</button>
+```
+**Why:** `ChevronRight` points toward the next page in LTR. In RTL the next page sits to the *left*, so the icon must rotate 180° to keep the meaning consistent.
+
+### 🔴 styles/globals.css:88 — `text-align: left` in body copy
+**Current:**
+```css
+.prose p { text-align: left; }
+```
+**Fix:**
+```css
+.prose p { text-align: start; }
+```
+**Why:** Physical alignment forces left-aligned paragraphs in RTL, producing a ragged right edge. `start` follows writing direction.
+
+### 🟡 components/Toast.tsx:12 — Toast container anchored with physical offset
+**Current:**
+```tsx
+<div className="fixed bottom-4 right-4 z-50">
+```
+**Fix:**
+```tsx
+<div className="fixed bottom-4 end-4 z-50">
+```
+**Why:** Toasts conventionally appear in the trailing-edge corner. `right-4` keeps them on the right in RTL, where the trailing edge is the left.
+
+### 🟡 components/Card.tsx:6 — Card shadow with directional offset
+**Current:**
+```tsx
+<div className="shadow-[4px_4px_12px_rgba(0,0,0,0.1)]">
+```
+**Fix:**
+```tsx
+<div className="shadow-[calc(4px_*_var(--rtl-flip,1))_4px_12px_rgba(0,0,0,0.1)]">
+```
+**Why:** A 4px horizontal shadow offset reads as light-from-the-left in LTR. In RTL the implied light source should flip; otherwise shadows look wrong against mirrored layouts.
+
+### 🟢 styles/globals.css:14 — `letter-spacing` set on Arabic body text
+**Current:**
+```css
+body { letter-spacing: 0.02em; font-family: 'Cairo', sans-serif; }
+```
+**Fix:**
+```css
+body { letter-spacing: 0; font-family: 'Cairo', sans-serif; }
+```
+**Why:** Arabic is cursive — any positive `letter-spacing` breaks the connections between letterforms.
+
+### 🟢 components/Article.tsx:9 — Tight line-height on Arabic paragraph
+**Current:**
+```tsx
+<p className="leading-tight">{content}</p>
+```
+**Fix:**
+```tsx
+<p className="leading-[1.8]">{content}</p>
+```
+**Why:** Arabic diacritics (tashkeel) clip when line-height drops below ~1.6. Body copy should use 1.7–1.8.
+
+## Recommended order
+
+Tackle in this order — earlier severities block later ones from being meaningful:
+
+1. **🔴 Breaking first.** These render the UI incorrectly in RTL. Ship-blocking. Fix before any visual review.
+2. **🟡 Degraded next.** Layout works but looks wrong (mismatched shadows, off-axis animations, wrong-side toasts). Fix before stakeholder demo.
+3. **🟢 Cosmetic last.** Typography polish (letter-spacing, line-height, font choice). Fix before launch but safe to batch.
+
+Re-run `/rtl-audit` after each pass to confirm zero regressions.
+````
 
 ---
 
