@@ -101,6 +101,118 @@ Never manipulate Arabic strings character by character — breaks text shaping.
 
 Each of these needs explicit RTL handling:
 
+### Modals / Dialogs
+Close button sits on the **inline-end** corner — top-left in RTL, top-right in LTR. Focus traps must follow DOM order, which already respects writing direction; do not hard-code Tab to "move right."
+
+Action-button order is a **decision point**: many design systems (Material, iOS HIG) put the primary action on the right in LTR. Mirroring that puts the primary on the left in RTL — which feels backward to users coming from native Arabic apps that often place the primary on the right (closer to the thumb on RTL-laid phones). Pick one rule per project and document it in `rtl.config.js`.
+
+```jsx
+<dialog dir="rtl" className="...">
+  <button className="absolute top-3 end-3" aria-label="إغلاق">
+    <X />
+  </button>
+  <h2>تأكيد الحذف</h2>
+  <p>هل أنت متأكد؟</p>
+  <footer className="flex gap-2 justify-end">
+    {/* Order in DOM = visual order in RTL.
+        Primary first in DOM → renders on inline-start (left in RTL). */}
+    <button className="btn-primary">حذف</button>
+    <button className="btn-secondary">إلغاء</button>
+  </footer>
+</dialog>
+```
+
+**Gotcha:** Centering a modal with `left: 50%; transform: translateX(-50%)` works in both directions because the offset is symmetric — but `inset-inline-start: 50%; transform: translateX(-50%)` mirrors correctly *and* signals intent.
+
+### Date pickers
+Calendar grids must set `dir="rtl"` on the grid container so column 1 (Saturday) renders on the right. Month-navigation chevrons are directional — flip them. Day-of-week headers must match the visual column order.
+
+Week-start day differs by locale:
+- **Arabic (most countries):** Saturday is the first day
+- **Hebrew:** Sunday
+- **Persian:** Saturday
+
+Don't hard-code `weekStartsOn: 1` (Monday, common in EU libs). Read it from locale data.
+
+```jsx
+<div dir="rtl" className="grid grid-cols-7 gap-1">
+  <header className="contents text-sm text-muted">
+    {/* DOM order = visual order in RTL: Sat is column 1, rendered rightmost */}
+    <span>السبت</span><span>الأحد</span><span>الاثنين</span>
+    <span>الثلاثاء</span><span>الأربعاء</span><span>الخميس</span><span>الجمعة</span>
+  </header>
+  {/* day cells */}
+</div>
+
+<nav className="flex items-center justify-between">
+  <button aria-label="الشهر السابق">
+    <ChevronLeft className="rtl:rotate-180" />
+  </button>
+  <span>أبريل ٢٠٢٦</span>
+  <button aria-label="الشهر التالي">
+    <ChevronRight className="rtl:rotate-180" />
+  </button>
+</nav>
+```
+
+**Gotcha:** Numerals inside date cells can be Arabic-Indic (`١٥`) or Western (`15`). Match the project-level decision in `rtl.config.js`. Mixing is the bug.
+
+### Command palettes / Search dropdowns
+Result highlight bands and selection indicators follow text direction — no extra work if you used logical properties. Keyboard arrows behave as follows:
+
+- **Up / Down:** unaffected by direction. Up always = previous result, Down = next.
+- **Left / Right:** semantics flip. In RTL, Left = "next character/word" inside the input; Right = "previous." If your palette uses arrows for tab-like navigation between sections, swap them with `dir`.
+- **Home / End:** map to start/end of line — already direction-aware in browsers.
+
+```jsx
+<div role="combobox" dir="rtl">
+  <input className="ps-9 pe-3" placeholder="ابحث..." />
+  <Search className="absolute start-3 top-1/2 -translate-y-1/2" />
+  <ul role="listbox">
+    {results.map(r => (
+      <li role="option" className="ps-3 pe-3 text-start">
+        <span className="font-medium">{r.title}</span>
+        <kbd dir="ltr" className="ms-auto">⌘K</kbd> {/* shortcut stays LTR */}
+      </li>
+    ))}
+  </ul>
+</div>
+```
+
+**Gotcha:** Keyboard shortcut hints (`⌘K`, `Ctrl+P`) are LTR islands. Wrap them in `dir="ltr"` even inside an RTL list.
+
+### Rich text editors
+Toolbar buttons appear in the same DOM order in both directions, which means visual order flips automatically — Bold sits on the right in RTL. That's correct. Don't override.
+
+Indent/outdent are **logical**: indent always pushes toward inline-end. In RTL the indent grows leftward visually. Use `margin-inline-start` on indented blocks; do not use `margin-left`.
+
+Alignment buttons must say **Start / End**, not Left / Right. The underlying CSS is `text-align: start | center | end | justify`. Show the icons mirrored in RTL.
+
+List markers (`•`, `1.`) sit on the inline-start side automatically when the editor sets `dir="rtl"` on the list — no manual work.
+
+```jsx
+<div role="toolbar" className="flex gap-1" dir="rtl">
+  <button title="غامق"><Bold /></button>
+  <button title="مائل"><Italic /></button>
+  <span className="w-px bg-border mx-1" />
+  <button title="محاذاة للبداية" data-align="start">
+    <AlignStart className="rtl:rotate-180" />
+  </button>
+  <button title="توسيط" data-align="center"><AlignCenter /></button>
+  <button title="محاذاة للنهاية" data-align="end">
+    <AlignEnd className="rtl:rotate-180" />
+  </button>
+  <span className="w-px bg-border mx-1" />
+  <button title="إنقاص المسافة"><Outdent className="rtl:rotate-180" /></button>
+  <button title="زيادة المسافة"><Indent className="rtl:rotate-180" /></button>
+</div>
+
+{/* Indented blockquote */}
+<blockquote style={{ marginInlineStart: '1.5rem' }}>...</blockquote>
+```
+
+**Gotcha:** `contenteditable` regions inherit `dir` from the nearest ancestor. If your editor lets users mix Arabic and English paragraphs, set `dir="auto"` on each `<p>` so each paragraph picks its own direction from its first strong character.
+
 ### Breadcrumbs
 ```jsx
 // Separator arrow must flip
@@ -163,6 +275,21 @@ Tab reading order reverses in RTL — first tab is rightmost.
   رجوع
 </button>
 ```
+
+### Out of scope — escalate
+
+This skill does **not** cover the components below. Don't guess — flag them for human review and explain what RTL decisions are pending.
+
+- **Complex data visualizations** — D3 charts, force-directed graphs, custom SVG dashboards. Axis direction, tooltip placement, and legend ordering are domain decisions.
+- **Map UIs** — Mapbox, Google Maps, Leaflet. Map tiles are not mirrored (geography is geography); only the chrome (controls, panels, route lists) is RTL. Boundary rules are project-specific.
+- **Video / audio players with directional controls** — scrub bars, chapter markers, and playback rate menus mix temporal direction (always LTR — time flows forward) with spatial UI direction.
+- **Game UIs / canvas-rendered scenes** — anything drawn imperatively to `<canvas>` or WebGL. CSS direction does not reach into the canvas.
+- **PDF viewers and document renderers** — page layout is fixed by the source document; the viewer chrome is RTL but the content is not.
+- **Animation-heavy marketing pages** — bespoke parallax, scroll-linked timelines, custom Lottie files. Each animation needs a designer call, not a generic flip.
+
+When you hit one of these, write a one-paragraph note to the user listing the specific RTL decisions that need a human:
+
+> "This component falls outside the rtl-skill scope. Pending decisions: (1) does the chart x-axis flip, (2) does the legend order reverse, (3) does the tooltip pointer mirror? Please confirm before I proceed."
 
 ---
 
