@@ -1,66 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 160" width="520" height="160" role="img" aria-label="rtl-skill">
-  <defs>
-    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7c5cff"/>
-      <stop offset="100%" stop-color="#00d9b3"/>
-    </linearGradient>
-    <linearGradient id="brandSoft" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7c5cff" stop-opacity="0.18"/>
-      <stop offset="100%" stop-color="#00d9b3" stop-opacity="0.18"/>
-    </linearGradient>
-    <linearGradient id="textFade" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#ffffff"/>
-      <stop offset="100%" stop-color="#b6b8d4"/>
-    </linearGradient>
-  </defs>
+  <style>
+    .text-main { fill: #0f172a; }
+    .text-sub { fill: #64748b; }
+    .box-bg { fill: #ffffff; stroke: #e2e8f0; }
+    .mark-swoosh { stroke: #0f172a; }
+    .mark-arrow { stroke: #3b82f6; }
+    @media (prefers-color-scheme: dark) {
+      .text-main { fill: #f8fafc; }
+      .text-sub { fill: #94a3b8; }
+      .box-bg { fill: #020617; stroke: #1e293b; }
+      .mark-swoosh { stroke: #f8fafc; }
+      .mark-arrow { stroke: #60a5fa; }
+    }
+  </style>
 
-  <!-- Brand mark: rounded square with stylized ر (raa) glyph + RTL flow dots -->
-  <g transform="translate(20 20)">
-    <!-- Soft glow halo -->
-    <rect x="-4" y="-4" width="128" height="128" rx="28" fill="url(#brandSoft)"/>
-    <!-- Mark body -->
-    <rect width="120" height="120" rx="24" fill="#0a0a0f"/>
-    <rect width="120" height="120" rx="24" fill="none" stroke="url(#brand)" stroke-width="1.5" opacity="0.6"/>
-
-    <!-- Stylized ر — single sweeping curve, right-to-left -->
-    <path
-      d="M 86 34 Q 86 78 38 84"
-      stroke="url(#brand)"
-      stroke-width="11"
-      stroke-linecap="round"
-      fill="none"/>
-
-    <!-- Direction-flow dots (right to left, fading) -->
-    <circle cx="86" cy="100" r="3.5" fill="#00d9b3" opacity="0.95"/>
-    <circle cx="72" cy="100" r="2.8" fill="#00d9b3" opacity="0.6"/>
-    <circle cx="60" cy="100" r="2.2" fill="#00d9b3" opacity="0.3"/>
+  <g transform="translate(20, 20)">
+    <!-- Sleek Box -->
+    <rect class="box-bg" x="0" y="0" width="120" height="120" rx="28" stroke-width="2" />
+    
+    <!-- Abstract 'ر' -->
+    <path d="M 82 35 Q 82 85 35 88" fill="none" class="mark-swoosh" stroke-width="12" stroke-linecap="round" />
+    
+    <!-- Directional arrow -->
+    <path d="M 50 73 L 35 88 L 50 103" fill="none" class="mark-arrow" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" />
   </g>
 
-  <!-- Wordmark -->
-  <g transform="translate(170 0)">
-    <!-- "rtl-skill" -->
-    <text
-      x="0" y="78"
-      font-family="'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif"
-      font-size="46"
-      font-weight="700"
-      letter-spacing="-1.5">
-      <tspan fill="url(#brand)">rtl</tspan><tspan fill="url(#textFade)">-skill</tspan>
+  <!-- Elite Typography -->
+  <g transform="translate(170, 0)">
+    <text class="text-main" x="0" y="85" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-size="54" font-weight="800" letter-spacing="-2.5">
+      rtl<tspan font-weight="300" class="text-sub">-skill</tspan>
     </text>
-
-    <!-- Tagline -->
-    <text
-      x="2" y="108"
-      font-family="'Inter', 'Segoe UI', system-ui, sans-serif"
-      font-size="13"
-      font-weight="500"
-      fill="#9ea0b8"
-      letter-spacing="0.5">RTL-first UI for Arabic apps</text>
-
-    <!-- Tiny RTL arrow accent -->
-    <g transform="translate(2 124)" opacity="0.7">
-      <line x1="0" y1="0" x2="40" y2="0" stroke="url(#brand)" stroke-width="1.5" stroke-linecap="round"/>
-      <path d="M 5 -3 L 0 0 L 5 3" stroke="url(#brand)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-    </g>
+    
+    <text class="text-sub" x="4" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif" font-size="13" font-weight="600" letter-spacing="4" text-transform="uppercase">
+      RTL Architecture Standard
+    </text>
   </g>
 </svg>

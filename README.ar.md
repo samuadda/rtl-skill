@@ -1,151 +1,106 @@
-<div align="center">
+<div align="center" dir="rtl">
 
-<img src="assets/logo.svg" alt="شعار rtl-skill" width="420"/>
+<img src="assets/logo.svg" alt="rtl-skill" width="480"/>
 
-# rtl-skill
+<br/>
 
-![النجوم](https://img.shields.io/github/stars/samuadda/rtl-skill?style=flat&color=orange)
-![آخر تحديث](https://img.shields.io/github/last-commit/samuadda/rtl-skill?style=flat&color=green)
-![الرخصة](https://img.shields.io/github/license/samuadda/rtl-skill?style=flat&color=yellow)
-![npm](https://img.shields.io/badge/install-npx%20skills%20add-blue?style=flat)
+[![Stars](https://img.shields.io/github/stars/samuadda/rtl-skill?style=for-the-badge&color=252525&labelColor=151515)](https://github.com/samuadda/rtl-skill/stargazers)
+[![License](https://img.shields.io/github/license/samuadda/rtl-skill?style=for-the-badge&color=252525&labelColor=151515)](https://github.com/samuadda/rtl-skill/blob/main/LICENSE)
+[![NPM Install](https://img.shields.io/badge/install-npx%20skills%20add-3b82f6?style=for-the-badge&labelColor=151515)](https://npmjs.com/package/rtl-skill)
 
-**واجهة مستخدم عربية من اليمين إلى اليسار — تثبيت واحد، لكل وكيل.**
+**المعيار النخبوي لهندسة واجهات اليمين إلى اليسار (RTL) في وكلاء الذكاء الاصطناعي**
 
-مهارة لوكلاء الذكاء الاصطناعي تجعل دعم تخطيط RTL العربي تلقائياً. تغطي انعكاس التخطيط، الخصائص المنطقية في CSS، الطباعة العربية، المكونات الاتجاهية، الأيقونات، الرسوم المتحركة، والنماذج.
+[Read in English](README.md)
 
 </div>
 
----
+<br/>
 
 <div dir="rtl">
 
+تُزوّد مهارة `rtl-skill` وكلاء الذكاء الاصطناعي البرمجية بفهم أصيل وعميق لهيكلة واجهات المستخدم العربية (RTL). وتضمن تنفيذاً آلياً وخالياً من العيوب للخصائص المنطقية (Logical Properties)، الطباعة العربية، الأيقونات الاتجاهية، والرسوم المتحركة المنعكسة.
+
+---
+
 ## التثبيت
 
-### الموصى به (عبر `skills` CLI)
+### المسار الموصى به
 
 ```bash
-# اكتشاف الوكيل تلقائياً
+# اكتشاف وكيلك النشط والتثبيت التلقائي
 npx skills add samuadda/rtl-skill
 
-# وكلاء محددون
+# تحديد وكيل معين
 npx skills add samuadda/rtl-skill -a claude-code
-npx skills add samuadda/rtl-skill -a cursor
-npx skills add samuadda/rtl-skill -a windsurf
-npx skills add samuadda/rtl-skill -a cline
-npx skills add samuadda/rtl-skill -a copilot
 
-# عالمي (جميع المشاريع)
+# التثبيت الشامل لجميع المشاريع
 npx skills add samuadda/rtl-skill -g
 ```
 
-### تثبيت يدوي (بديل)
+### التكامل اليدوي
 
-إذا لم يتوفر `skills` CLI أو لم يتعرّف على وكيلك، انسخ مجلد المهارة مباشرة:
+للبيئات المؤسسية أو الوكلاء غير المدرجين، قم باستنساخ المهارة مباشرة إلى دليل المهارات الخاص بوكيلك:
 
 ```bash
-# Claude Code — على مستوى المشروع
 git clone --depth 1 https://github.com/samuadda/rtl-skill.git /tmp/rtl-skill
-mkdir -p .claude/skills
-cp -R /tmp/rtl-skill/skills/rtl .claude/skills/
 
-# Claude Code — عالمي
-mkdir -p ~/.claude/skills
+# Claude Code
 cp -R /tmp/rtl-skill/skills/rtl ~/.claude/skills/
 
-# Antigravity — على مستوى مساحة العمل
-mkdir -p .agents/skills
-cp -R /tmp/rtl-skill/skills/rtl .agents/skills/
-
-# Antigravity — عالمي
-mkdir -p ~/.gemini/antigravity/skills
+# Antigravity
 cp -R /tmp/rtl-skill/skills/rtl ~/.gemini/antigravity/skills/
-
-# Cursor / Windsurf / Cline — هذه الوكلاء تستخدم ملفات قواعد لا مجلدات مهارات.
-# استخدم `skills` CLI أعلاه؛ يقوم بتكييف المهارة لصيغة كل وكيل.
 ```
 
-بعد التثبيت، تأكد من وجود `SKILL.md` في مسار الوكيل:
-
-| الوكيل | المسار |
-|--------|--------|
-| Claude Code (مشروع) | `.claude/skills/rtl/SKILL.md` |
-| Claude Code (عالمي) | `~/.claude/skills/rtl/SKILL.md` |
-| Antigravity (مساحة عمل) | `.agents/skills/rtl/SKILL.md` |
-| Antigravity (عالمي) | `~/.gemini/antigravity/skills/rtl/SKILL.md` |
-
-يلتقط الوكيل المهارة في المحادثة التالية.
-
 ---
+
+## القدرات
+
+تؤسس المهارة نموذجاً ذهنياً صارماً يعتمد على "محور البداية/النهاية". وتتعامل باحترافية مع:
+
+- **CSS المنطقي**: فرض استخدام `inline-start/end` بدلاً من `left/right` التقليدية.
+- **الطباعة العربية**: تحسين `line-height` وتصفير `letter-spacing` ليتناسب مع خطوط مثل Cairo و Tajawal.
+- **السياق الاتجاهي**: قلب الأيقونات الاتجاهية بذكاء مع الحفاظ على الأيقونات المحايدة كما هي.
+- **التفاعلات الدقيقة**: عكس اتجاه الانزلاق، أشرطة التقدم، ومحملات الهيكل (Skeleton Loaders).
+- **النماذج والجداول**: محاذاة دقيقة للمدخلات، تدفقات التحقق من صحة النماذج، وترتيب الأعمدة.
+- **جزر LTR**: تعامل مثالي مع الأرقام، الروابط، وكتل الأكواد البرمجية داخل النص العربي.
 
 ## الأوامر
 
-| الأمر | ما يفعله |
-|-------|----------|
-| `/rtl-init` | إنشاء مشروع جديد مع دعم RTL مدمج — الخطوط، الإعادة، الإعداد، المكونات الأساسية |
-| `/rtl-audit` | فحص قاعدة الكود الحالية لمشاكل RTL ← ينتج `rtl-audit-report.md` |
-| `/rtl-convert <file>` | تحويل مكون محدد ليدعم RTL |
-| `/rtl-check` | فحص سريع بالقائمة الذهبية على المكون الحالي |
+| الأمر | الإجراء |
+|-------|---------|
+| `/rtl-init` | بناء أساس قوي وجاهز للإنتاج لدعم RTL (الخطوط، الإعادة، الإعدادات الأساسية). |
+| `/rtl-audit` | تحليل قاعدة الكود الحالية وإنشاء تقرير `rtl-audit-report.md`. |
+| `/rtl-convert <file>` | إعادة هيكلة مكون محدد ليتوافق تماماً مع معايير RTL. |
+| `/rtl-check` | إجراء تحقق سريع وشامل للمكون النشط لضمان تطبيق القواعد الذهبية. |
 
-تعمل جميع الأوامر أيضاً باللغة الطبيعية: "افحص هذا المشروع لمشاكل RTL"، "حوّل هذا المكون لـ RTL"، وما إلى ذلك.
-
----
-
-## ما يغطيه
-
-- ✓ الخصائص المنطقية في CSS (`inline-start/end` بدلاً من `left/right`)
-- ✓ الطباعة العربية (خطوط Cairo/Tajawal، `letter-spacing: 0`، `line-height` سخي)
-- ✓ تصنيف الأيقونات (اتجاهية مقابل محايدة — يعرف ما يجب قلبه)
-- ✓ أنماط المكونات (مسارات التنقل، الترقيم، الأدراج، التنبيهات، العروض الدوارة)
-- ✓ الرسوم المتحركة (اتجاهات الانزلاق، مؤشرات التقدم، محملات الهيكل)
-- ✓ النماذج (محاذاة الإدخال، التسميات، التحقق، إدخالات الأرقام)
-- ✓ البيانات والجداول (ترتيب الأعمدة، مؤشرات الفرز)
-- ✓ جزر LTR (الأرقام، الروابط، الكود داخل النص العربي)
-- ✓ هيكل التبديل الديناميكي بين LTR وRTL
-
-## دعم الأطر البرمجية
-
-- Tailwind CSS (متغيرات `rtl:`، أدوات الخصائص المنطقية `s`/`e`)
-- CSS / SCSS عادي (الخصائص المنطقية، mixins في SCSS)
-- CSS-in-JS (styled-components، emotion)
-- React Native (`I18nManager`، Animated API)
+*تستجيب هذه الأوامر أيضاً للتوجيهات باللغة الطبيعية (مثل: "قم بفحص هذا المشروع لمشاكل RTL").*
 
 ---
 
-## النموذج الذهني الأساسي
+## الموثوقية المؤسسية
 
-قبل إنشاء أي مكون، يُجري الوكيل **اختبار محور البداية/النهاية**:
+تم اختبار `rtl-skill` تحت الضغط مقابل مكتبات مكونات واجهة المستخدم الرائدة.
 
-> "هل لهذا العنصر بداية ونهاية؟ إذا نعم — فهو يحتاج إلى قرار RTL واعٍ."
+في اختبار الضغط الخاص بنا على سجل `shadcn-ui`، تمكنت المهارة من تحديد وإصلاح **22 تراجعاً هيكلياً مختلفاً في RTL** عبر 56 مكوناً، محققة نسبة نجاح 100% في حزمة التقييم المكونة من 30 استعلاماً.
 
-كل عنصر يقع في إحدى ثلاث فئات:
-- **دائماً انعكاس** — التخطيط، flex، الأيقونات الاتجاهية، الرسوم المتحركة
-- **لا انعكاس أبداً** — الأرقام، الكود، الروابط، الأيقونات المحايدة
-- **حسب السياق** — الصور، الرسوم التوضيحية
+للاطلاع على المعايير التفصيلية، يمكنك مراجعة [التدقيق الواقعي](tests/real-world-audit.md) و [نتائج التقييم](evals/results.md).
 
 ---
 
-## اختبار المهارة
+## الاستثناءات
 
-شغّل `/rtl-audit test/BadComponent.jsx` داخل Claude Code وقيّم المخرجات وفق [`test/ANSWER_KEY.md`](test/ANSWER_KEY.md). المكون يحتوي على 24 خطأ RTL متعمد (16 حرج + 5 متدهور + 3 تجميلي) ويتوقع قلب 5 أيقونات اتجاهية وترك 5 محايدة. النجاح = اكتشاف 22+ مع تصنيف صحيح للأيقونات.
+تركز هذه الهيكلة حصرياً على **واجهات المستخدم العربية**. وتستثني عمداً:
+- اللغات الأخرى التي تُكتب من اليمين إلى اليسار (والتي تتطلب معالجة طباعية مختلفة).
+- الرسومات الإلزامية مثل Canvas/WebGL.
+- تصورات البيانات المعقدة (مثل خرائط D3).
+- ترجمة المحتوى (هذه أداة للتخطيط والهيكلة، وليست واجهة برمجة تطبيقات للترجمة).
 
-فحص بنية بدون API وبدون اعتماديات:
-
-```bash
-npm run validate
-```
-
----
-
-## المساهمة
-
-راجع [CONTRIBUTING.md](CONTRIBUTING.md) للاطلاع على كيفية إصلاح القواعد، إضافة أطر عمل، وتقديم طلبات الدمج.
-
-القاعدة الأساسية: **يجب أن يبقى `reference.md` و`workflows.md` متزامنين** — إذا أضفت قاعدة لأحدهما، حدّث الآخر.
+عند مواجهة هذه المجالات، يتم توجيه الوكيل للتصعيد لطلب قرارات هيكلية بشرية.
 
 ---
 
-## الرخصة
-
-MIT
+<div align="center">
+  تم الإصدار بموجب <a href="LICENSE">رخصة MIT</a>.
+</div>
 
 </div>
