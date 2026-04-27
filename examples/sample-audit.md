@@ -11,16 +11,16 @@ Path audited: shadcn-ui/next-template (cloned, depth 1)
 Files scanned: app/layout.tsx, app/page.tsx, components/site-header.tsx, components/main-nav.tsx, components/theme-toggle.tsx, components/icons.tsx, components/ui/button.tsx (319 LOC total)
 
 ## Summary
-- 🔴 Breaking: 5 issues
-- 🟡 Degraded: 1 issue
-- 🟢 Cosmetic: 3 issues
+- 🛑 Breaking: 5 issues
+- 🔶 Degraded: 1 issue
+- 🔹 Cosmetic: 3 issues
 - **Total: 9 issues**
 
 Note: this is an English-first template. Findings are what would break if it were converted to Arabic.
 
 ---
 
-## 🔴 Breaking
+## 🛑 Breaking
 
 ### app/layout.tsx:35 — `<html lang="en">` missing `dir`
 **Current:** `<html lang="en" suppressHydrationWarning>`
@@ -47,7 +47,7 @@ Tailwind's `space-x-*` injects `margin-left` on every child but the first — ph
 
 ---
 
-## 🟡 Degraded
+## 🔶 Degraded
 
 ### components/site-header.tsx:14 — `justify-end` semantics under RTL
 **Current:** `<div className="flex flex-1 items-center justify-end space-x-4">`
@@ -55,7 +55,7 @@ Tailwind's `space-x-*` injects `margin-left` on every child but the first — ph
 
 ---
 
-## 🟢 Cosmetic
+## 🔹 Cosmetic
 
 ### app/page.tsx:10 — `tracking-tighter` on `<h1>`
 **Current:** `text-3xl font-extrabold leading-tight tracking-tighter md:text-4xl`

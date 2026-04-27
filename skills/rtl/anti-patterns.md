@@ -8,7 +8,7 @@ Scan this file before generating in an existing codebase — most of these survi
 
 ## Layout
 
-### ❌ Anti-pattern: Wrapping whole sections in `direction: ltr`
+### ⛔ Anti-pattern: Wrapping whole sections in `direction: ltr`
 **What agents do:**
 ```jsx
 <section style={{ direction: 'ltr' }}>
@@ -29,7 +29,7 @@ Scan this file before generating in an existing codebase — most of these survi
 </section>
 ```
 
-### ❌ Anti-pattern: Hardcoding `flex-direction: row` and expecting `dir="rtl"` to reverse it
+### ⛔ Anti-pattern: Hardcoding `flex-direction: row` and expecting `dir="rtl"` to reverse it
 **What agents do:**
 ```css
 .toolbar {
@@ -50,7 +50,7 @@ Scan this file before generating in an existing codebase — most of these survi
 }
 ```
 
-### ❌ Anti-pattern: Component APIs that take `"left" | "right"` as a prop value
+### ⛔ Anti-pattern: Component APIs that take `"left" | "right"` as a prop value
 **What agents do:**
 ```tsx
 // Library API: <Sheet side="left" | "right">
@@ -74,7 +74,7 @@ function RTLSheet({ side, ...rest }: { side: 'start' | 'end' } & Props) {
 <RTLSheet side="end">...</RTLSheet>  // trailing edge in both directions
 ```
 
-### ❌ Anti-pattern: Using `margin-left` because "the linter doesn't complain"
+### ⛔ Anti-pattern: Using `margin-left` because "the linter doesn't complain"
 **What agents do:**
 ```css
 .avatar {
@@ -94,7 +94,7 @@ function RTLSheet({ side, ...rest }: { side: 'start' | 'end' } & Props) {
 
 ## Typography
 
-### ❌ Anti-pattern: Setting `letter-spacing` for "design polish" on Arabic text
+### ⛔ Anti-pattern: Setting `letter-spacing` for "design polish" on Arabic text
 **What agents do:**
 ```css
 .brand-heading {
@@ -114,7 +114,7 @@ function RTLSheet({ side, ...rest }: { side: 'start' | 'end' } & Props) {
 }
 ```
 
-### ❌ Anti-pattern: Mixing Western and Arabic-Indic numerals in the same UI
+### ⛔ Anti-pattern: Mixing Western and Arabic-Indic numerals in the same UI
 **What agents do:**
 ```jsx
 <div>
@@ -137,7 +137,7 @@ import { formatNumber } from '@/lib/format'
 </div>
 ```
 
-### ❌ Anti-pattern: Manipulating Arabic strings character-by-character
+### ⛔ Anti-pattern: Manipulating Arabic strings character-by-character
 **What agents do:**
 ```js
 function getInitial(name) {
@@ -168,7 +168,7 @@ function truncate(text, max) {
 
 ## Icons
 
-### ❌ Anti-pattern: Applying `transform: scaleX(-1)` to a text container
+### ⛔ Anti-pattern: Applying `transform: scaleX(-1)` to a text container
 **What agents do:**
 ```css
 [dir="rtl"] .heading-with-arrow {
@@ -185,7 +185,7 @@ function truncate(text, max) {
 </h2>
 ```
 
-### ❌ Anti-pattern: Flipping every icon "to be safe"
+### ⛔ Anti-pattern: Flipping every icon "to be safe"
 **What agents do:**
 ```jsx
 <div className="rtl:[&_svg]:-scale-x-100">
@@ -209,7 +209,7 @@ function truncate(text, max) {
 
 ## Forms
 
-### ❌ Anti-pattern: `text-align: left` on input fields
+### ⛔ Anti-pattern: `text-align: left` on input fields
 **What agents do:**
 ```css
 input, textarea {
@@ -227,7 +227,7 @@ input, textarea {
 }
 ```
 
-### ❌ Anti-pattern: Number/phone inputs without an LTR island
+### ⛔ Anti-pattern: Number/phone inputs without an LTR island
 **What agents do:**
 ```jsx
 <label>رقم الجوال</label>
@@ -250,7 +250,7 @@ input, textarea {
 
 ## Animations
 
-### ❌ Anti-pattern: Hardcoded `translateX(-100%)` slide-in
+### ⛔ Anti-pattern: Hardcoded `translateX(-100%)` slide-in
 **What agents do:**
 ```css
 @keyframes slideIn {
@@ -273,7 +273,7 @@ input, textarea {
 .drawer { animation: slideIn 0.3s ease; }
 ```
 
-### ❌ Anti-pattern: Skeleton shimmer hardcoded left-to-right
+### ⛔ Anti-pattern: Skeleton shimmer hardcoded left-to-right
 **What agents do:**
 ```css
 @keyframes shimmer {

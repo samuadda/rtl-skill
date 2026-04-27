@@ -7,13 +7,13 @@ Use this to grade the agent's output after running `/rtl-audit` and `/rtl-conver
 ## Expected /rtl-audit output
 
 ### Summary
-- 🔴 Breaking: 16 issues
-- 🟡 Degraded: 5 issues
-- 🟢 Cosmetic: 3 issues
+- 🛑 Breaking: 16 issues
+- 🔶 Degraded: 5 issues
+- 🔹 Cosmetic: 3 issues
 
 ---
 
-### 🔴 Breaking issues (agent must catch ALL of these)
+### 🛑 Breaking issues (agent must catch ALL of these)
 
 | # | Location | Issue | Fix |
 |---|----------|-------|-----|
@@ -36,7 +36,7 @@ Use this to grade the agent's output after running `/rtl-audit` and `/rtl-conver
 
 ---
 
-### 🟡 Degraded issues
+### 🔶 Degraded issues
 
 | # | Location | Issue | Fix |
 |---|----------|-------|-----|
@@ -48,7 +48,7 @@ Use this to grade the agent's output after running `/rtl-audit` and `/rtl-conver
 
 ---
 
-### 🟢 Cosmetic issues
+### 🔹 Cosmetic issues
 
 | # | Location | Issue | Fix |
 |---|----------|-------|-----|
@@ -64,16 +64,16 @@ The agent must correctly classify every icon:
 
 | Icon | Type | Should flip? | Correct answer |
 |------|------|-------------|----------------|
-| `<ChevronRight>` in breadcrumbs | Directional | ✅ Yes | Rotate 180 in RTL |
-| `<ChevronRight>` in sidebar | Directional | ✅ Yes | Rotate 180 in RTL |
-| `<Send>` | Directional | ✅ Yes | `scaleX(-1)` in RTL |
-| `<ArrowLeft>` "السابق" | Directional | ✅ Yes | In RTL should point right (scaleX(-1)) |
-| `<ArrowLeft>` "التالي" | Directional | ✅ Yes | Remove hardcoded rotation, use RTL-aware |
-| `<Heart>` | Neutral | ❌ No | Leave unchanged |
-| `<Star>` | Neutral | ❌ No | Leave unchanged |
-| `<Search>` | Neutral | ❌ No | Leave unchanged |
-| `<Bell>` | Neutral | ❌ No | Leave unchanged |
-| `<Settings>` | Neutral | ❌ No | Leave unchanged |
+| `<ChevronRight>` in breadcrumbs | Directional | ✓ Yes | Rotate 180 in RTL |
+| `<ChevronRight>` in sidebar | Directional | ✓ Yes | Rotate 180 in RTL |
+| `<Send>` | Directional | ✓ Yes | `scaleX(-1)` in RTL |
+| `<ArrowLeft>` "السابق" | Directional | ✓ Yes | In RTL should point right (scaleX(-1)) |
+| `<ArrowLeft>` "التالي" | Directional | ✓ Yes | Remove hardcoded rotation, use RTL-aware |
+| `<Heart>` | Neutral | ✗ No | Leave unchanged |
+| `<Star>` | Neutral | ✗ No | Leave unchanged |
+| `<Search>` | Neutral | ✗ No | Leave unchanged |
+| `<Bell>` | Neutral | ✗ No | Leave unchanged |
+| `<Settings>` | Neutral | ✗ No | Leave unchanged |
 
 **Perfect score: 5 directional flipped, 5 neutral untouched.**
 
@@ -83,8 +83,8 @@ The agent must correctly classify every icon:
 
 | Score | Verdict |
 |-------|---------|
-| 22–24 issues caught + icons correct | ✅ Skill working great |
-| 16–21 issues caught | 🟡 Good — review which rules are vague |
-| < 16 issues caught | 🔴 Skill needs refinement |
-| Any neutral icon flipped | 🔴 Icon classification rule needs work |
-| Phone/email/URL NOT wrapped | 🔴 LTR island rule needs reinforcing |
+| 22–24 issues caught + icons correct | ✓ Skill working great |
+| 16–21 issues caught | 🔶 Good — review which rules are vague |
+| < 16 issues caught | 🛑 Skill needs refinement |
+| Any neutral icon flipped | 🛑 Icon classification rule needs work |
+| Phone/email/URL NOT wrapped | 🛑 LTR island rule needs reinforcing |

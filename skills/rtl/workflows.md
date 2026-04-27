@@ -110,7 +110,7 @@ Flag this as a required project decision:
 
 ### What to scan for
 
-**🔴 Breaking — renders incorrectly in RTL**
+**🛑 Breaking — renders incorrectly in RTL**
 - `margin-left`, `margin-right`, `padding-left`, `padding-right` (use logical instead)
 - `left: X`, `right: X` in positioned elements
 - `text-align: left` or `text-align: right`
@@ -120,14 +120,14 @@ Flag this as a required project decision:
 - Directional icons (arrows, chevrons) without flip handling
 - `transform: translateX()` without RTL sign reversal
 
-**🟡 Degraded — works but looks wrong**
+**🔶 Degraded — works but looks wrong**
 - `border-left`, `border-right` as design elements (not dividers)
 - `box-shadow` with directional offset not mirrored
 - `background-position: left` / `right`
 - Animations sliding from wrong direction
 - `justify-content: flex-start` where start ≠ right
 
-**🟢 Cosmetic — minor polish issues**
+**🔹 Cosmetic — minor polish issues**
 - `letter-spacing` set on Arabic text (should be 0)
 - `line-height` below 1.6 on Arabic text
 - Generic system font instead of Arabic-optimized font
@@ -143,14 +143,14 @@ Generated: 2026-04-27
 Path audited: apps/web/src
 
 ## Summary
-- 🔴 Breaking: 3 issues
-- 🟡 Degraded: 2 issues
-- 🟢 Cosmetic: 2 issues
+- 🛑 Breaking: 3 issues
+- 🔶 Degraded: 2 issues
+- 🔹 Cosmetic: 2 issues
 - **Total:** 7 issues across 5 files
 
 ## Issues
 
-### 🔴 components/Sidebar.tsx:24 — Hardcoded `left` on absolute-positioned drawer
+### 🛑 components/Sidebar.tsx:24 — Hardcoded `left` on absolute-positioned drawer
 **Current:**
 ```tsx
 <aside className="absolute left-0 top-0 h-full w-72 border-r">
@@ -161,7 +161,7 @@ Path audited: apps/web/src
 ```
 **Why:** `left-0` and `border-r` pin the drawer to the physical left edge in both directions. In RTL the drawer should open from the right — use `start-0` and `border-e` so the browser mirrors automatically.
 
-### 🔴 components/Pagination.tsx:41 — Directional chevron not flipped
+### 🛑 components/Pagination.tsx:41 — Directional chevron not flipped
 **Current:**
 ```tsx
 <button onClick={next} aria-label="next">
@@ -176,7 +176,7 @@ Path audited: apps/web/src
 ```
 **Why:** `ChevronRight` points toward the next page in LTR. In RTL the next page sits to the *left*, so the icon must rotate 180° to keep the meaning consistent.
 
-### 🔴 styles/globals.css:88 — `text-align: left` in body copy
+### 🛑 styles/globals.css:88 — `text-align: left` in body copy
 **Current:**
 ```css
 .prose p { text-align: left; }
@@ -187,7 +187,7 @@ Path audited: apps/web/src
 ```
 **Why:** Physical alignment forces left-aligned paragraphs in RTL, producing a ragged right edge. `start` follows writing direction.
 
-### 🟡 components/Toast.tsx:12 — Toast container anchored with physical offset
+### 🔶 components/Toast.tsx:12 — Toast container anchored with physical offset
 **Current:**
 ```tsx
 <div className="fixed bottom-4 right-4 z-50">
@@ -198,7 +198,7 @@ Path audited: apps/web/src
 ```
 **Why:** Toasts conventionally appear in the trailing-edge corner. `right-4` keeps them on the right in RTL, where the trailing edge is the left.
 
-### 🟡 components/Card.tsx:6 — Card shadow with directional offset
+### 🔶 components/Card.tsx:6 — Card shadow with directional offset
 **Current:**
 ```tsx
 <div className="shadow-[4px_4px_12px_rgba(0,0,0,0.1)]">
@@ -209,7 +209,7 @@ Path audited: apps/web/src
 ```
 **Why:** A 4px horizontal shadow offset reads as light-from-the-left in LTR. In RTL the implied light source should flip; otherwise shadows look wrong against mirrored layouts.
 
-### 🟢 styles/globals.css:14 — `letter-spacing` set on Arabic body text
+### 🔹 styles/globals.css:14 — `letter-spacing` set on Arabic body text
 **Current:**
 ```css
 body { letter-spacing: 0.02em; font-family: 'Cairo', sans-serif; }
@@ -220,7 +220,7 @@ body { letter-spacing: 0; font-family: 'Cairo', sans-serif; }
 ```
 **Why:** Arabic is cursive — any positive `letter-spacing` breaks the connections between letterforms.
 
-### 🟢 components/Article.tsx:9 — Tight line-height on Arabic paragraph
+### 🔹 components/Article.tsx:9 — Tight line-height on Arabic paragraph
 **Current:**
 ```tsx
 <p className="leading-tight">{content}</p>
@@ -235,9 +235,9 @@ body { letter-spacing: 0; font-family: 'Cairo', sans-serif; }
 
 Tackle in this order — earlier severities block later ones from being meaningful:
 
-1. **🔴 Breaking first.** These render the UI incorrectly in RTL. Ship-blocking. Fix before any visual review.
-2. **🟡 Degraded next.** Layout works but looks wrong (mismatched shadows, off-axis animations, wrong-side toasts). Fix before stakeholder demo.
-3. **🟢 Cosmetic last.** Typography polish (letter-spacing, line-height, font choice). Fix before launch but safe to batch.
+1. **🛑 Breaking first.** These render the UI incorrectly in RTL. Ship-blocking. Fix before any visual review.
+2. **🔶 Degraded next.** Layout works but looks wrong (mismatched shadows, off-axis animations, wrong-side toasts). Fix before stakeholder demo.
+3. **🔹 Cosmetic last.** Typography polish (letter-spacing, line-height, font choice). Fix before launch but safe to batch.
 
 Re-run `/rtl-audit` after each pass to confirm zero regressions.
 ````
@@ -312,17 +312,17 @@ Re-run `/rtl-audit` after each pass to confirm zero regressions.
 **Purpose:** Lightweight checklist pass after generating a new component. Flags only — does not rewrite. Run this after every new component before moving on.
 
 ### Process
-Run each checklist item. Output pass ✅ or fail ❌ with a one-line fix suggestion.
+Run each checklist item. Output pass ✓ or fail ✗ with a one-line fix suggestion.
 
 ```
-✅ No physical left/right properties
-❌ flex-direction: row — needs rtl:flex-row-reverse or use row-reverse as default
-✅ Icons classified correctly
-✅ Animations direction correct
-❌ letter-spacing: 0.5px on Arabic text — set to 0
-✅ Numbers wrapped in LTR island
-✅ Form inputs aligned correctly
-✅ dir attribute present
+✓ No physical left/right properties
+✗ flex-direction: row — needs rtl:flex-row-reverse or use row-reverse as default
+✓ Icons classified correctly
+✓ Animations direction correct
+✗ letter-spacing: 0.5px on Arabic text — set to 0
+✓ Numbers wrapped in LTR island
+✓ Form inputs aligned correctly
+✓ dir attribute present
 ```
 
 If any item fails: fix it immediately before proceeding. Do not defer RTL fixes.

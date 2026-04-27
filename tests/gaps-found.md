@@ -22,7 +22,7 @@ Source: `tests/real-world-audit.md` against shadcn-ui/ui @ fd0e0c3.
 
 ## Gap 4 — `left-[50%]; translate-x-[-50%]` centering false-positive in audit (LOW — defer)
 
-**What the skill is missing.** The `/rtl-audit` grep rule treats every `left-[` match as 🔴 Breaking. Symmetric centering with `translate-x-[-50%]` actually works in both directions and shouldn't be flagged at the same severity as `left-0` or `left-4`. This produces noise on real reports.
+**What the skill is missing.** The `/rtl-audit` grep rule treats every `left-[` match as 🛑 Breaking. Symmetric centering with `translate-x-[-50%]` actually works in both directions and shouldn't be flagged at the same severity as `left-0` or `left-4`. This produces noise on real reports.
 
 **Recommended fix (defer):** Add a "False positives" subsection to the `/rtl-audit` rules in `workflows.md` listing two safe patterns: symmetric centering (`left-[50%]; translate-x-[-50%]`) and block-axis offsets (`top-*`, `bottom-*` — block axis is unaffected by writing direction). Tell the agent to suppress these from the report.
 

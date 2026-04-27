@@ -29,8 +29,8 @@
 
 <!-- paste the scoring block from npm test -->
 ```
-🔴 Breaking:
-🟡 Degraded:
-🟢 Cosmetic:
+🛑 Breaking:
+🔶 Degraded:
+🔹 Cosmetic:
 Total:
 ```

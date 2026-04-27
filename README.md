@@ -58,12 +58,28 @@ cp -R /tmp/rtl-skill/skills/rtl .claude/skills/
 mkdir -p ~/.claude/skills
 cp -R /tmp/rtl-skill/skills/rtl ~/.claude/skills/
 
-# Cursor / Windsurf / Cline — point your agent's skill loader at
-# the cloned skills/rtl/ directory; consult your agent's docs for the
-# exact path (typically .cursor/skills/, .windsurf/skills/, etc).
+# Antigravity — workspace-scoped
+mkdir -p .agents/skills
+cp -R /tmp/rtl-skill/skills/rtl .agents/skills/
+
+# Antigravity — global
+mkdir -p ~/.gemini/antigravity/skills
+cp -R /tmp/rtl-skill/skills/rtl ~/.gemini/antigravity/skills/
+
+# Cursor / Windsurf / Cline — these agents use rules files, not skill folders.
+# Use the `skills` CLI above; it adapts the skill to each agent's native format.
 ```
 
-After install, verify with: `ls .claude/skills/rtl/SKILL.md` (or the equivalent path for your agent). The agent picks up the skill on next conversation.
+After install, verify the SKILL.md exists at your agent's skill path:
+
+| Agent | Path |
+|-------|------|
+| Claude Code (project) | `.claude/skills/rtl/SKILL.md` |
+| Claude Code (global) | `~/.claude/skills/rtl/SKILL.md` |
+| Antigravity (workspace) | `.agents/skills/rtl/SKILL.md` |
+| Antigravity (global) | `~/.gemini/antigravity/skills/rtl/SKILL.md` |
+
+The agent picks up the skill on next conversation.
 
 ---
 
@@ -82,15 +98,15 @@ All commands also work as natural language: "audit this project for RTL issues",
 
 ## What it covers
 
-- ✅ CSS logical properties (`inline-start/end` over `left/right`)
-- ✅ Arabic typography (Cairo/Tajawal fonts, `letter-spacing: 0`, generous `line-height`)
-- ✅ Icon classification (directional vs neutral — knows what to flip)
-- ✅ Component patterns (breadcrumbs, pagination, drawers, toasts, carousels)
-- ✅ Animations (slide directions, progress fills, skeleton loaders)
-- ✅ Forms (input alignment, labels, validation, number inputs)
-- ✅ Data & tables (column order, sort indicators)
-- ✅ LTR islands (numbers, URLs, code inside Arabic text)
-- ✅ Dynamic LTR/RTL switching scaffold
+- ✓ CSS logical properties (`inline-start/end` over `left/right`)
+- ✓ Arabic typography (Cairo/Tajawal fonts, `letter-spacing: 0`, generous `line-height`)
+- ✓ Icon classification (directional vs neutral — knows what to flip)
+- ✓ Component patterns (breadcrumbs, pagination, drawers, toasts, carousels)
+- ✓ Animations (slide directions, progress fills, skeleton loaders)
+- ✓ Forms (input alignment, labels, validation, number inputs)
+- ✓ Data & tables (column order, sort indicators)
+- ✓ LTR islands (numbers, URLs, code inside Arabic text)
+- ✓ Dynamic LTR/RTL switching scaffold
 
 ## Framework support
 

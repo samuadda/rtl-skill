@@ -21,6 +21,8 @@
 
 ## التثبيت
 
+### الموصى به (عبر `skills` CLI)
+
 ```bash
 # اكتشاف الوكيل تلقائياً
 npx skills add samuadda/rtl-skill
@@ -35,6 +37,43 @@ npx skills add samuadda/rtl-skill -a copilot
 # عالمي (جميع المشاريع)
 npx skills add samuadda/rtl-skill -g
 ```
+
+### تثبيت يدوي (بديل)
+
+إذا لم يتوفر `skills` CLI أو لم يتعرّف على وكيلك، انسخ مجلد المهارة مباشرة:
+
+```bash
+# Claude Code — على مستوى المشروع
+git clone --depth 1 https://github.com/samuadda/rtl-skill.git /tmp/rtl-skill
+mkdir -p .claude/skills
+cp -R /tmp/rtl-skill/skills/rtl .claude/skills/
+
+# Claude Code — عالمي
+mkdir -p ~/.claude/skills
+cp -R /tmp/rtl-skill/skills/rtl ~/.claude/skills/
+
+# Antigravity — على مستوى مساحة العمل
+mkdir -p .agents/skills
+cp -R /tmp/rtl-skill/skills/rtl .agents/skills/
+
+# Antigravity — عالمي
+mkdir -p ~/.gemini/antigravity/skills
+cp -R /tmp/rtl-skill/skills/rtl ~/.gemini/antigravity/skills/
+
+# Cursor / Windsurf / Cline — هذه الوكلاء تستخدم ملفات قواعد لا مجلدات مهارات.
+# استخدم `skills` CLI أعلاه؛ يقوم بتكييف المهارة لصيغة كل وكيل.
+```
+
+بعد التثبيت، تأكد من وجود `SKILL.md` في مسار الوكيل:
+
+| الوكيل | المسار |
+|--------|--------|
+| Claude Code (مشروع) | `.claude/skills/rtl/SKILL.md` |
+| Claude Code (عالمي) | `~/.claude/skills/rtl/SKILL.md` |
+| Antigravity (مساحة عمل) | `.agents/skills/rtl/SKILL.md` |
+| Antigravity (عالمي) | `~/.gemini/antigravity/skills/rtl/SKILL.md` |
+
+يلتقط الوكيل المهارة في المحادثة التالية.
 
 ---
 
@@ -53,15 +92,15 @@ npx skills add samuadda/rtl-skill -g
 
 ## ما يغطيه
 
-- ✅ الخصائص المنطقية في CSS (`inline-start/end` بدلاً من `left/right`)
-- ✅ الطباعة العربية (خطوط Cairo/Tajawal، `letter-spacing: 0`، `line-height` سخي)
-- ✅ تصنيف الأيقونات (اتجاهية مقابل محايدة — يعرف ما يجب قلبه)
-- ✅ أنماط المكونات (مسارات التنقل، الترقيم، الأدراج، التنبيهات، العروض الدوارة)
-- ✅ الرسوم المتحركة (اتجاهات الانزلاق، مؤشرات التقدم، محملات الهيكل)
-- ✅ النماذج (محاذاة الإدخال، التسميات، التحقق، إدخالات الأرقام)
-- ✅ البيانات والجداول (ترتيب الأعمدة، مؤشرات الفرز)
-- ✅ جزر LTR (الأرقام، الروابط، الكود داخل النص العربي)
-- ✅ هيكل التبديل الديناميكي بين LTR وRTL
+- ✓ الخصائص المنطقية في CSS (`inline-start/end` بدلاً من `left/right`)
+- ✓ الطباعة العربية (خطوط Cairo/Tajawal، `letter-spacing: 0`، `line-height` سخي)
+- ✓ تصنيف الأيقونات (اتجاهية مقابل محايدة — يعرف ما يجب قلبه)
+- ✓ أنماط المكونات (مسارات التنقل، الترقيم، الأدراج، التنبيهات، العروض الدوارة)
+- ✓ الرسوم المتحركة (اتجاهات الانزلاق، مؤشرات التقدم، محملات الهيكل)
+- ✓ النماذج (محاذاة الإدخال، التسميات، التحقق، إدخالات الأرقام)
+- ✓ البيانات والجداول (ترتيب الأعمدة، مؤشرات الفرز)
+- ✓ جزر LTR (الأرقام، الروابط، الكود داخل النص العربي)
+- ✓ هيكل التبديل الديناميكي بين LTR وRTL
 
 ## دعم الأطر البرمجية
 

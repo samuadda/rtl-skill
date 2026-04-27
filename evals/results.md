@@ -12,34 +12,34 @@
 
 | ID  | Query                                                      | Expected | Got | Pass |
 |-----|------------------------------------------------------------|----------|-----|------|
-| T01 | make this RTL                                              | YES      | YES | ✅   |
-| T02 | audit this project for RTL issues                          | YES      | YES | ✅   |
-| T03 | convert this component to Arabic UI                        | YES      | YES | ✅   |
-| T04 | build a landing page in Arabic                             | YES      | YES | ✅   |
-| T05 | this app needs to support Saudi users                      | YES      | NO  | ❌   |
-| T06 | the chevrons are pointing the wrong way for our Arabic version | YES  | YES | ✅   |
-| T07 | /rtl-init                                                  | YES      | YES | ✅   |
-| T08 | /rtl-audit src/components                                  | YES      | YES | ✅   |
-| T09 | /rtl-convert Button.tsx                                    | YES      | YES | ✅   |
-| T10 | /rtl-check                                                 | YES      | YES | ✅   |
-| T11 | rtlize this dropdown                                       | YES      | YES | ✅   |
-| T12 | I need bidirectional text support in this input            | YES      | YES | ✅   |
-| T13 | review this Arabic form for layout issues                  | YES      | YES | ✅   |
-| T14 | the dashboard breaks when I switch to RTL mode             | YES      | YES | ✅   |
-| T15 | add Hebrew support to this UI                              | YES      | NO  | ❌   |
-| F01 | build a French landing page                                | NO       | NO  | ✅   |
-| F02 | fix the layout on this page                                | NO       | NO  | ✅   |
-| F03 | the text is right-aligned and looks weird, can you fix it  | NO       | NO  | ✅   |
-| F04 | translate this English copy into Arabic                    | NO       | YES | ❌   |
-| F05 | set up internationalization for this React app             | NO       | NO  | ✅   |
-| F06 | add dark mode to this design system                        | NO       | NO  | ✅   |
-| F07 | the button is on the left side, move it to the right       | NO       | NO  | ✅   |
-| F08 | convert this component to TypeScript                       | NO       | NO  | ✅   |
-| F09 | audit our accessibility for WCAG compliance                | NO       | NO  | ✅   |
-| F10 | the right-click context menu isn't showing                 | NO       | NO  | ✅   |
-| F11 | make this responsive on mobile                             | NO       | NO  | ✅   |
-| F12 | add multilingual support for English and Spanish           | NO       | NO  | ✅   |
-| F13 | the form labels are misaligned                             | NO       | NO  | ✅   |
+| T01 | make this RTL                                              | YES      | YES | ✓   |
+| T02 | audit this project for RTL issues                          | YES      | YES | ✓   |
+| T03 | convert this component to Arabic UI                        | YES      | YES | ✓   |
+| T04 | build a landing page in Arabic                             | YES      | YES | ✓   |
+| T05 | this app needs to support Saudi users                      | YES      | NO  | ✗   |
+| T06 | the chevrons are pointing the wrong way for our Arabic version | YES  | YES | ✓   |
+| T07 | /rtl-init                                                  | YES      | YES | ✓   |
+| T08 | /rtl-audit src/components                                  | YES      | YES | ✓   |
+| T09 | /rtl-convert Button.tsx                                    | YES      | YES | ✓   |
+| T10 | /rtl-check                                                 | YES      | YES | ✓   |
+| T11 | rtlize this dropdown                                       | YES      | YES | ✓   |
+| T12 | I need bidirectional text support in this input            | YES      | YES | ✓   |
+| T13 | review this Arabic form for layout issues                  | YES      | YES | ✓   |
+| T14 | the dashboard breaks when I switch to RTL mode             | YES      | YES | ✓   |
+| T15 | add Hebrew support to this UI                              | YES      | NO  | ✗   |
+| F01 | build a French landing page                                | NO       | NO  | ✓   |
+| F02 | fix the layout on this page                                | NO       | NO  | ✓   |
+| F03 | the text is right-aligned and looks weird, can you fix it  | NO       | NO  | ✓   |
+| F04 | translate this English copy into Arabic                    | NO       | YES | ✗   |
+| F05 | set up internationalization for this React app             | NO       | NO  | ✓   |
+| F06 | add dark mode to this design system                        | NO       | NO  | ✓   |
+| F07 | the button is on the left side, move it to the right       | NO       | NO  | ✓   |
+| F08 | convert this component to TypeScript                       | NO       | NO  | ✓   |
+| F09 | audit our accessibility for WCAG compliance                | NO       | NO  | ✓   |
+| F10 | the right-click context menu isn't showing                 | NO       | NO  | ✓   |
+| F11 | make this responsive on mobile                             | NO       | NO  | ✓   |
+| F12 | add multilingual support for English and Spanish           | NO       | NO  | ✓   |
+| F13 | the form labels are misaligned                             | NO       | NO  | ✓   |
 
 **Pass rate: 25 / 28 = 89.3%** — below the 90% target. Iteration required.
 
@@ -67,9 +67,9 @@
 
 | ID  | Query                                          | Expected | Got | Pass |
 |-----|-------------------------------------------------|----------|-----|------|
-| T05 | this app needs to support Saudi users          | YES      | YES | ✅   |
-| T15 | add Hebrew support to this UI                  | YES      | YES | ✅   |
-| F04 | translate this English copy into Arabic        | NO       | NO  | ✅   |
+| T05 | this app needs to support Saudi users          | YES      | YES | ✓   |
+| T15 | add Hebrew support to this UI                  | YES      | YES | ✓   |
+| F04 | translate this English copy into Arabic        | NO       | NO  | ✓   |
 
 **Pass rate: 28 / 28 = 100%.**
 
@@ -126,9 +126,9 @@ Total query count: 28 → 30.
 
 | ID  | Query                                              | Expected | Got | Pass |
 |-----|-----------------------------------------------------|----------|-----|------|
-| T15 | add Hebrew support to this UI                       | NO       | NO  | ✅   |
-| F14 | add Persian/Farsi RTL support to our app            | NO       | NO  | ✅   |
-| F15 | we need Urdu language UI                            | NO       | NO  | ✅   |
+| T15 | add Hebrew support to this UI                       | NO       | NO  | ✓   |
+| F14 | add Persian/Farsi RTL support to our app            | NO       | NO  | ✓   |
+| F15 | we need Urdu language UI                            | NO       | NO  | ✓   |
 
 ### Why each previously-trigger query still passes
 
