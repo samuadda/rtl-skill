@@ -101,6 +101,21 @@ const initial = [...new Intl.Segmenter('ar', { granularity: 'grapheme' }).segmen
 </body></html>
 ```
 
+### 8. Don't fork a third-party library to flip one icon
+**Forbidden:**
+```jsx
+// Copy-paste react-day-picker's source into the repo just to add
+// rtl:rotate-180 to one chevron. Now you own the maintenance forever.
+import { DayPicker } from './forked/day-picker' // forked from npm
+```
+**Do instead:** Use Tailwind's arbitrary-deep variant to flip the descendant from a wrapper you own. No fork, no maintenance burden. See `frameworks/tailwind.md` → "Arbitrary-deep RTL variants" for the full pattern.
+```jsx
+import { DayPicker } from 'react-day-picker' // npm, untouched
+
+<DayPicker className="rtl:**:[.rdp-button_next>svg]:rotate-180
+                      rtl:**:[.rdp-button_previous>svg]:rotate-180" />
+```
+
 ---
 
 ## Commands

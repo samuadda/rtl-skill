@@ -69,6 +69,69 @@ Tailwind v3.3+ supports all `s`/`e` logical utilities natively.
 
 ---
 
+## Arbitrary-deep RTL variants
+
+### The problem
+
+Some libraries render their own internal DOM and never expose the directional element to you. react-day-picker draws its own month-navigation chevrons inside `<button class="rdp-button_next">`. react-select renders its dropdown caret. Several Radix primitives wrap content in chrome you don't write. Rich text editors generate toolbar SVGs internally.
+
+You can't add `rtl:rotate-180` to an element you don't own. Forking the library to add one class is overkill; skipping the flip leaves the chevrons pointing the wrong way in RTL.
+
+### The solution
+
+Tailwind v3.3+ supports **arbitrary variants** combined with **descendant selectors** via the `**:` syntax. You add a single class to a wrapper you do control, and Tailwind generates a CSS rule that targets the deep descendant only when `dir="rtl"` is set.
+
+The shape is:
+```
+rtl:**:[<descendant-selector>]:<utility>
+```
+
+Read it as: "in RTL, for every descendant matching `<descendant-selector>`, apply `<utility>`."
+
+### Example 1 — react-day-picker chevrons
+
+```jsx
+import { Calendar } from "your-calendar-wrapper" // wraps react-day-picker
+
+<Calendar
+  className={cn(
+    "rounded-md border p-3",
+    // Flip the next/previous month chevrons that live inside react-day-picker's
+    // own DOM. We only own the wrapper; rdp owns the buttons.
+    "rtl:**:[.rdp-button_next>svg]:rotate-180",
+    "rtl:**:[.rdp-button_previous>svg]:rotate-180"
+  )}
+/>
+```
+
+This is the exact pattern shadcn-ui's `calendar.tsx` uses — single wrapper class, no fork.
+
+### Example 2 — every directional SVG inside a third-party menu
+
+```jsx
+import { ContextMenu } from "some-menu-library"
+
+<ContextMenu className="rtl:**:[svg.directional]:rotate-180">
+  {/* library renders its own <svg class="directional"> deep inside */}
+</ContextMenu>
+```
+
+If the library marks directional SVGs with a stable class, target it directly. If it uses an attribute or element type, the same syntax works: `rtl:**:[[data-direction]]:rotate-180`, `rtl:**:[svg]:scale-x-[-1]`.
+
+### Constraints
+
+This pattern requires all three:
+
+1. **Tailwind v3.3 or later.** Older versions don't compile the `**:` arbitrary-descendant syntax.
+2. **A stable selector inside the library's DOM.** A class name (`.rdp-button_next`), data attribute (`[data-slot="indicator"]`), or element type (`svg`). If the library's DOM uses generated hash classes (CSS modules, atomic CSS) the selector breaks on the next library release.
+3. **The library doesn't run its own `dir`-aware logic.** A few libraries (Radix `DirectionProvider`, MUI with RTL plugin) flip directional elements themselves. Stacking your `rtl:rotate-180` on top of their flip cancels both. Check first.
+
+### When to reach for it
+
+Use the arbitrary-deep pattern **only** when you can't add classes to the actual element. If the library exposes a `className` or `slot` prop on the directional element itself, prefer that — clearer intent, easier to debug, survives DOM-structure changes inside the library. Save the deep variant for cases where the API leaves you no other path.
+
+---
+
 ## Flex direction
 
 ```jsx

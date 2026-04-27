@@ -8,11 +8,11 @@ Source: `tests/real-world-audit.md` against shadcn-ui/ui @ fd0e0c3.
 
 **Fix (this phase):** Add a "Direction-as-API props" entry to `anti-patterns.md`. Tell agents to prefer `side="start" | "end"` and, when consuming a library that only offers physical names, document the mapping for the project (e.g. "in this app, `side='end'` is the trailing edge — `right` in LTR, `left` in RTL") and add a thin wrapper component.
 
-## Gap 2 — Tailwind `rtl:**:[selector]:rotate-180` deep variant pattern (MEDIUM — defer)
+## Gap 2 — Tailwind `rtl:**:[selector]:rotate-180` deep variant pattern (RESOLVED)
 
-**What the skill is missing.** When third-party components render their own DOM (react-day-picker, react-select), the agent cannot edit child markup directly. shadcn's `calendar.tsx:37-38` solves this with `rtl:**:[.rdp-button_next>svg]:rotate-180` — Tailwind's arbitrary deep-descendant variant. Our `frameworks/tailwind.md` does not show this pattern.
+**What the skill was missing.** When third-party components render their own DOM (react-day-picker, react-select), the agent cannot edit child markup directly. shadcn's `calendar.tsx:37-38` solves this with `rtl:**:[.rdp-button_next>svg]:rotate-180` — Tailwind's arbitrary deep-descendant variant. Our `frameworks/tailwind.md` did not show this pattern.
 
-**Recommended fix (defer to a later iteration):** Add an "Advanced: deep variants for third-party DOM" section to `frameworks/tailwind.md` with one example.
+**Resolved 2026-04-27:** Added `## Arbitrary-deep RTL variants` section to `frameworks/tailwind.md` with the problem statement, the `rtl:**:[selector]:utility` shape, a react-day-picker example matching shadcn's pattern, a generic third-party-menu example, three constraints (Tailwind v3.3+, stable selector, no library `dir`-aware logic), and guidance to prefer the library's own `className`/`slot` prop when available. Cross-referenced from `SKILL.md` Forbidden Workarounds entry #8 ("Don't fork a third-party library to flip one icon") and from `reference.md` Section 4 "How to flip."
 
 ## Gap 3 — Global `letter-spacing: 0` over-applies on Latin-only projects (CRITICAL — fixed in this phase)
 

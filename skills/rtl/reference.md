@@ -332,6 +332,8 @@ Ask: "Does this icon point or indicate direction?"
 [dir="rtl"] { --rtl-flip: -1; }
 ```
 
+For icons rendered inside third-party libraries you can't modify (react-day-picker chevrons, react-select carets, library-owned menu chrome), see the arbitrary-deep variant pattern in [`frameworks/tailwind.md`](frameworks/tailwind.md#arbitrary-deep-rtl-variants) → `rtl:**:[<selector>]:rotate-180` flips a descendant from a wrapper you own without forking the library.
+
 ---
 
 ## 5. Animations & Transitions
