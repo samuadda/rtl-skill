@@ -19,6 +19,12 @@ A skill for AI coding agents that makes Arabic/RTL layout support automatic. Cov
 
 ---
 
+## Scope
+
+This skill targets **Arabic-language UI specifically**. Other RTL scripts are RTL but have different typography rules — different cursive systems, different diacritic positioning, different font stacks — and are not supported. Use this skill for Arabic; pick a script-specific resource for any other RTL language.
+
+---
+
 ## Install
 
 ### Recommended (via the `skills` CLI)
@@ -122,9 +128,9 @@ npm run validate
 
 ## Evals
 
-The skill ships with a 28-query trigger eval suite that measures whether the agent correctly invokes the skill from a given user prompt. Mix of direct mentions ("make this RTL"), indirect signals ("Saudi users"), slash commands, and false-positive edge cases ("translate to Arabic", "right-click context menu").
+The skill ships with a 30-query trigger eval suite that measures whether the agent correctly invokes the skill from a given user prompt. Mix of direct mentions ("make this RTL"), indirect signals ("Saudi users"), slash commands, false-positive edge cases ("translate to Arabic", "right-click context menu"), and non-Arabic RTL scripts the skill explicitly rejects.
 
-- **Latest pass rate: 28 / 28 (100%)** after one description-tuning iteration.
+- **Latest pass rate: 30 / 30 (100%)** after Arabic-only scope lockdown.
 - See [`evals/results.md`](evals/results.md) for the full table and iteration log.
 - See [`evals/README.md`](evals/README.md) for how to re-run manually (no API key required).
 
@@ -153,6 +159,7 @@ This skill stays focused on layout, typography, components, and animations for R
 - **PDF viewers and document renderers** — page layout is fixed by the source document; the viewer chrome is RTL but the content is not.
 - **Animation-heavy marketing pages** — bespoke parallax, scroll-linked timelines, custom Lottie files. Each animation needs a designer call, not a generic flip.
 - **Content translation** — this skill is for layout work. Translating English copy to Arabic is a different task — agents should not invoke `rtl-skill` for it.
+- **Other RTL scripts** — non-Arabic RTL languages use different cursive systems, different diacritic conventions, and different font stacks. The Arabic-specific guidance in this skill (Cairo/Tajawal fonts, tashkeel-aware line-height, cursive-letterform letter-spacing rules) does not transfer cleanly. The skill rejects requests for non-Arabic RTL UI rather than half-supporting them.
 
 When you hit one of these, the agent will flag it for human review with the specific RTL decisions that need a call. See [`skills/rtl/reference.md`](skills/rtl/reference.md) → "Out of scope — escalate" for the full list.
 

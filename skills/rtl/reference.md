@@ -135,12 +135,7 @@ Action-button order is a **decision point**: many design systems (Material, iOS 
 ### Date pickers
 Calendar grids must set `dir="rtl"` on the grid container so column 1 (Saturday) renders on the right. Month-navigation chevrons are directional — flip them. Day-of-week headers must match the visual column order.
 
-Week-start day differs by locale:
-- **Arabic (most countries):** Saturday is the first day
-- **Hebrew:** Sunday
-- **Persian:** Saturday
-
-Don't hard-code `weekStartsOn: 1` (Monday, common in EU libs). Read it from locale data.
+In most Arabic countries the week starts on **Saturday**. Don't hard-code `weekStartsOn: 1` (Monday, common in EU libraries) — read it from locale data and verify against the project's target market. Saudi Arabia officially shifted to a Sunday-start workweek in 2023; if you target KSA specifically, confirm with the product team.
 
 ```jsx
 <div dir="rtl" className="grid grid-cols-7 gap-1">

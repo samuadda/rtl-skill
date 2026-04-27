@@ -86,8 +86,20 @@
   {
     "id": "T15",
     "query": "add Hebrew support to this UI",
-    "should_trigger": true,
-    "reason": "Hebrew is RTL — same layout rules apply even though description emphasizes Arabic."
+    "should_trigger": false,
+    "reason": "Hebrew is RTL but uses different typography rules (niqqud vs tashkeel, no cursive connection) and different font stacks. This skill is Arabic-only — Hebrew requests should not trigger it."
+  },
+  {
+    "id": "F14",
+    "query": "add Persian/Farsi RTL support to our app",
+    "should_trigger": false,
+    "reason": "Persian script shares letterforms with Arabic but uses different font preferences (e.g. Vazirmatn over Cairo) and additional letters (پ چ ژ گ). This skill is scoped to Arabic — Persian needs separate guidance."
+  },
+  {
+    "id": "F15",
+    "query": "we need Urdu language UI",
+    "should_trigger": false,
+    "reason": "Urdu is RTL but uses Nastaliq script with sharply different vertical baseline behavior, line-height needs, and typography rules from Arabic Naskh. The skill's Arabic-typography guidance does not transfer."
   },
   {
     "id": "F01",
