@@ -1,25 +1,20 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="rtl-skill mark">
-  <defs>
-    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7c5cff"/>
-      <stop offset="100%" stop-color="#00d9b3"/>
-    </linearGradient>
-  </defs>
+  <style>
+    .box-bg { fill: #ffffff; stroke: #e2e8f0; }
+    .mark-swoosh { stroke: #0f172a; }
+    .mark-arrow { stroke: #3b82f6; }
+    @media (prefers-color-scheme: dark) {
+      .box-bg { fill: #0f172a; stroke: #1e293b; }
+      .mark-swoosh { stroke: #f8fafc; }
+      .mark-arrow { stroke: #60a5fa; }
+    }
+  </style>
 
-  <!-- Mark body -->
-  <rect width="120" height="120" rx="24" fill="#0a0a0f"/>
-  <rect width="120" height="120" rx="24" fill="none" stroke="url(#brand)" stroke-width="1.5" opacity="0.6"/>
+  <rect class="box-bg" x="0" y="0" width="120" height="120" rx="26" stroke-width="2"/>
 
   <!-- Stylized ر -->
-  <path
-    d="M 86 34 Q 86 78 38 84"
-    stroke="url(#brand)"
-    stroke-width="11"
-    stroke-linecap="round"
-    fill="none"/>
+  <path d="M 88 28 Q 88 82 34 88" fill="none" class="mark-swoosh" stroke-width="12" stroke-linecap="round"/>
 
-  <!-- Direction-flow dots -->
-  <circle cx="86" cy="100" r="3.5" fill="#00d9b3" opacity="0.95"/>
-  <circle cx="72" cy="100" r="2.8" fill="#00d9b3" opacity="0.6"/>
-  <circle cx="60" cy="100" r="2.2" fill="#00d9b3" opacity="0.3"/>
+  <!-- Directional arrow -->
+  <path d="M 50 72 L 34 88 L 50 104" fill="none" class="mark-arrow" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
