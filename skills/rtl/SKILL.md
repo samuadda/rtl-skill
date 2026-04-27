@@ -1,6 +1,6 @@
 ---
 name: rtl
-description: RTL (right-to-left) layout skill for Arabic UI. Use when building, auditing, or converting interfaces that need Arabic/RTL support. Handles layout mirroring, CSS logical properties, Arabic typography, directional components, animations, and forms. Triggers on /rtl-init, /rtl-audit, /rtl-convert, /rtl-check, or any mention of Arabic UI, RTL layout, or bidirectional text.
+description: RTL (right-to-left) layout skill for Arabic, Hebrew, Persian, and Urdu UI. Use when building, auditing, or converting user interfaces that need RTL support — including apps targeting Arabic-speaking regions like Saudi Arabia, UAE, or Egypt. Handles layout mirroring, CSS logical properties, Arabic typography, directional icons, animations, and forms. Triggers on /rtl-init, /rtl-audit, /rtl-convert, /rtl-check, or any mention of Arabic/Hebrew/Persian/Urdu UI, RTL layout, or bidirectional text. Do NOT use for plain translation tasks where only text content changes — this skill is for layout and component work, not localization.
 ---
 
 # RTL Skill — Arabic UI

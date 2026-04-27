@@ -1,0 +1,170 @@
+[
+  {
+    "id": "T01",
+    "query": "make this RTL",
+    "should_trigger": true,
+    "reason": "Direct mention of RTL — core trigger phrase."
+  },
+  {
+    "id": "T02",
+    "query": "audit this project for RTL issues",
+    "should_trigger": true,
+    "reason": "Direct RTL audit request — matches /rtl-audit semantics."
+  },
+  {
+    "id": "T03",
+    "query": "convert this component to Arabic UI",
+    "should_trigger": true,
+    "reason": "Arabic UI work — explicit domain match."
+  },
+  {
+    "id": "T04",
+    "query": "build a landing page in Arabic",
+    "should_trigger": true,
+    "reason": "Arabic UI build — implicit RTL requirement."
+  },
+  {
+    "id": "T05",
+    "query": "this app needs to support Saudi users",
+    "should_trigger": true,
+    "reason": "Saudi users → Arabic interface → RTL layout. Indirect signal."
+  },
+  {
+    "id": "T06",
+    "query": "the chevrons are pointing the wrong way for our Arabic version",
+    "should_trigger": true,
+    "reason": "Directional icon bug in Arabic UI — classic RTL skill territory."
+  },
+  {
+    "id": "T07",
+    "query": "/rtl-init",
+    "should_trigger": true,
+    "reason": "Slash command — explicit invocation."
+  },
+  {
+    "id": "T08",
+    "query": "/rtl-audit src/components",
+    "should_trigger": true,
+    "reason": "Slash command with path argument."
+  },
+  {
+    "id": "T09",
+    "query": "/rtl-convert Button.tsx",
+    "should_trigger": true,
+    "reason": "Slash command on a specific file."
+  },
+  {
+    "id": "T10",
+    "query": "/rtl-check",
+    "should_trigger": true,
+    "reason": "Slash command — golden checklist pass."
+  },
+  {
+    "id": "T11",
+    "query": "rtlize this dropdown",
+    "should_trigger": true,
+    "reason": "Slang verb for RTL conversion — explicit trigger."
+  },
+  {
+    "id": "T12",
+    "query": "I need bidirectional text support in this input",
+    "should_trigger": true,
+    "reason": "Bidirectional text is listed in the description triggers."
+  },
+  {
+    "id": "T13",
+    "query": "review this Arabic form for layout issues",
+    "should_trigger": true,
+    "reason": "Arabic form + layout review = RTL audit on a component."
+  },
+  {
+    "id": "T14",
+    "query": "the dashboard breaks when I switch to RTL mode",
+    "should_trigger": true,
+    "reason": "RTL bug report — direct trigger."
+  },
+  {
+    "id": "T15",
+    "query": "add Hebrew support to this UI",
+    "should_trigger": true,
+    "reason": "Hebrew is RTL — same layout rules apply even though description emphasizes Arabic."
+  },
+  {
+    "id": "F01",
+    "query": "build a French landing page",
+    "should_trigger": false,
+    "reason": "Non-English LTR locale. Easy false positive if the agent over-generalizes from 'Arabic' to 'foreign language'."
+  },
+  {
+    "id": "F02",
+    "query": "fix the layout on this page",
+    "should_trigger": false,
+    "reason": "Generic layout request — no RTL or Arabic signal."
+  },
+  {
+    "id": "F03",
+    "query": "the text is right-aligned and looks weird, can you fix it",
+    "should_trigger": false,
+    "reason": "Mentions 'right' but not RTL. Likely a CSS alignment bug, not a direction issue."
+  },
+  {
+    "id": "F04",
+    "query": "translate this English copy into Arabic",
+    "should_trigger": false,
+    "reason": "Content translation, not UI work. Mentions Arabic but the task is linguistic, not layout — high false-positive risk."
+  },
+  {
+    "id": "F05",
+    "query": "set up internationalization for this React app",
+    "should_trigger": false,
+    "reason": "i18n is broader than RTL. Could include RTL eventually but the request itself is about plumbing (i18next, locale files)."
+  },
+  {
+    "id": "F06",
+    "query": "add dark mode to this design system",
+    "should_trigger": false,
+    "reason": "Theming work — unrelated to direction."
+  },
+  {
+    "id": "F07",
+    "query": "the button is on the left side, move it to the right",
+    "should_trigger": false,
+    "reason": "Mentions left/right but is a per-element design tweak, not RTL mirroring."
+  },
+  {
+    "id": "F08",
+    "query": "convert this component to TypeScript",
+    "should_trigger": false,
+    "reason": "Mentions 'convert' but the target is TS, not RTL. Verb collision."
+  },
+  {
+    "id": "F09",
+    "query": "audit our accessibility for WCAG compliance",
+    "should_trigger": false,
+    "reason": "Mentions 'audit' but the domain is a11y, not RTL. Verb collision."
+  },
+  {
+    "id": "F10",
+    "query": "the right-click context menu isn't showing",
+    "should_trigger": false,
+    "reason": "'Right-click' is an input event, not a direction concern."
+  },
+  {
+    "id": "F11",
+    "query": "make this responsive on mobile",
+    "should_trigger": false,
+    "reason": "Responsive design — no direction signal."
+  },
+  {
+    "id": "F12",
+    "query": "add multilingual support for English and Spanish",
+    "should_trigger": false,
+    "reason": "i18n with two LTR locales. No RTL languages mentioned."
+  },
+  {
+    "id": "F13",
+    "query": "the form labels are misaligned",
+    "should_trigger": false,
+    "reason": "Generic form layout bug — no Arabic or RTL signal."
+  }
+]
