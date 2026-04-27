@@ -50,6 +50,30 @@ Scan this file before generating in an existing codebase — most of these survi
 }
 ```
 
+### ❌ Anti-pattern: Component APIs that take `"left" | "right"` as a prop value
+**What agents do:**
+```tsx
+// Library API: <Sheet side="left" | "right">
+<Sheet side="right">...</Sheet>      {/* in an RTL app */}
+<Drawer anchor="left">...</Drawer>   {/* MUI */}
+<Tooltip side="right">...</Tooltip>  {/* Radix */}
+```
+**Why it's wrong:** Even after every internal `right-0` is converted to `end-0`, the call site is still pinned to **physical** right. In an RTL app `side="right"` slides the panel onto the visual right (which is now the trailing edge), reversing what the consumer meant by "right." Auditing the implementation catches none of this — the bug lives in the prop value.
+
+**Correct approach:** Prefer logical names — `side="start" | "end"` — and define a wrapper when the library only exposes physical names. Document the mapping once at the project level so call sites are unambiguous.
+```tsx
+// Wrapper that adapts physical to logical
+function RTLSheet({ side, ...rest }: { side: 'start' | 'end' } & Props) {
+  const isRTL = useDirection() === 'rtl';
+  const physical = side === 'start' ? (isRTL ? 'right' : 'left')
+                                    : (isRTL ? 'left'  : 'right');
+  return <Sheet side={physical} {...rest} />;
+}
+
+// Call sites are now direction-agnostic
+<RTLSheet side="end">...</RTLSheet>  // trailing edge in both directions
+```
+
 ### ❌ Anti-pattern: Using `margin-left` because "the linter doesn't complain"
 **What agents do:**
 ```css

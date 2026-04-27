@@ -56,12 +56,20 @@ font-family: 'Cairo', 'Tajawal', 'IBM Plex Arabic', 'Noto Kufi Arabic', sans-ser
 
 Never use: Arial, Helvetica, system-ui alone — they render Arabic poorly.
 
-### Letter spacing — ALWAYS zero
+### Letter spacing — ALWAYS zero on Arabic
 ```css
-/* Arabic is cursive. Letter spacing breaks connected letterforms. */
-* { letter-spacing: 0; }
+/* Arabic is cursive. Letter spacing breaks connected letterforms.
+   Scope the reset to Arabic-rendering elements — applying it globally
+   on a Latin or mixed-content project strips designer-intended
+   tracking from headings and labels. */
+:lang(ar), [lang^="ar"], [dir="rtl"] {
+  letter-spacing: 0;
+}
+
+/* For pure-Arabic apps you can promote this to the root: */
+html[lang^="ar"] * { letter-spacing: 0; }
 ```
-This is the single most common Arabic typography mistake in agent-generated code.
+This is the single most common Arabic typography mistake in agent-generated code. Set the scope based on whether the project is Arabic-only, mixed-content, or LTR-first with Arabic translations.
 
 ### Line height — generous
 ```css
