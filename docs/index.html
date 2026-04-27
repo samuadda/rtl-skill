@@ -8,30 +8,37 @@
   <link rel="icon" type="image/svg+xml" href="logo.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Inter:ital,wght@0,400;0,500;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0a0a0f;
-      --bg-elev: #11121a;
-      --bg-card: #161823;
-      --border: #23263a;
-      --text: #e9eaf2;
-      --text-dim: #9ea0b8;
-      --accent: #7c5cff;
-      --accent-2: #00d9b3;
-      --danger: #ff5d6c;
-      --warn: #ffb84d;
-      --ok: #4dd29c;
-      --radius: 14px;
-      --max: 1100px;
+      --bg: #f9f9f7;
+      --bg-card: #ffffff;
+      --bg-subtle: #f3f3f1;
+      --border: #e4e4e0;
+      --border-light: #ececea;
+      --text: #1c1c1a;
+      --text-dim: #6b6b66;
+      --text-muted: #9b9b96;
+      --accent: #5b51f5;
+      --accent-hover: #4a41e0;
+      --accent-tint: rgba(91, 81, 245, 0.07);
+      --accent-2: #0891b2;
+      --accent-2-tint: rgba(8, 145, 178, 0.08);
+      --danger: #dc2626;
+      --warn: #d97706;
+      --ok: #16a34a;
+      --radius: 12px;
+      --radius-sm: 8px;
+      --max: 1080px;
+      --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+      --shadow: 0 4px 12px rgba(0,0,0,0.07), 0 1px 3px rgba(0,0,0,0.05);
     }
 
     * { box-sizing: border-box; }
     html, body { margin: 0; padding: 0; }
+
     body {
-      background: radial-gradient(1200px 600px at 80% -10%, rgba(124,92,255,0.18), transparent 60%),
-                  radial-gradient(900px 500px at -10% 20%, rgba(0,217,179,0.12), transparent 55%),
-                  var(--bg);
+      background: var(--bg);
       color: var(--text);
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       line-height: 1.65;
@@ -45,11 +52,20 @@
       line-height: 1.85;
     }
 
-    a { color: var(--accent-2); text-decoration: none; }
+    a { color: var(--accent); text-decoration: none; }
     a:hover { text-decoration: underline; }
+
     code, pre {
       font-family: 'JetBrains Mono', ui-monospace, Menlo, Consolas, monospace;
-      font-size: 0.92em;
+      font-size: 0.875em;
+    }
+
+    code {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-light);
+      padding: 1px 5px;
+      border-radius: 4px;
+      color: var(--accent);
     }
 
     /* Layout */
@@ -59,13 +75,14 @@
       padding-inline: 24px;
     }
 
-    /* Header */
+    /* Nav */
     .nav {
       position: sticky;
       top: 0;
       z-index: 10;
-      backdrop-filter: blur(12px);
-      background: rgba(10, 10, 15, 0.75);
+      backdrop-filter: blur(16px) saturate(1.5);
+      -webkit-backdrop-filter: blur(16px) saturate(1.5);
+      background: rgba(249, 249, 247, 0.88);
       border-bottom: 1px solid var(--border);
     }
     .nav-inner {
@@ -77,115 +94,153 @@
     .brand {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 9px;
       font-weight: 700;
+      font-size: 15px;
       color: var(--text);
+      letter-spacing: -0.01em;
     }
     .brand-mark {
-      width: 32px; height: 32px;
+      width: 28px;
+      height: 28px;
       display: block;
     }
     .nav-links {
-      display: flex; align-items: center; gap: 18px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
     }
     .nav-links a {
       color: var(--text-dim);
       font-size: 14px;
       font-weight: 500;
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      transition: color 0.15s, background 0.15s;
     }
-    .nav-links a:hover { color: var(--text); text-decoration: none; }
+    .nav-links a:hover {
+      color: var(--text);
+      background: var(--bg-subtle);
+      text-decoration: none;
+    }
     .lang-toggle {
       background: var(--bg-card);
       border: 1px solid var(--border);
-      color: var(--text);
+      color: var(--text-dim);
       padding: 6px 12px;
       border-radius: 999px;
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
+      transition: border-color 0.15s, color 0.15s;
+      font-family: inherit;
+      margin-inline-start: 6px;
     }
-    .lang-toggle:hover { border-color: var(--accent); }
+    .lang-toggle:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
 
     /* Hero */
     .hero {
-      padding-block: 80px 60px;
+      padding-block: 88px 72px;
       text-align: center;
     }
     .hero-eyebrow {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       font-size: 12px;
       font-weight: 600;
-      letter-spacing: 0.08em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      color: var(--accent-2);
-      background: rgba(0, 217, 179, 0.08);
-      border: 1px solid rgba(0, 217, 179, 0.25);
-      padding: 6px 12px;
+      color: var(--accent);
+      background: var(--accent-tint);
+      border: 1px solid rgba(91, 81, 245, 0.18);
+      padding: 5px 12px;
       border-radius: 999px;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
     }
     body[dir="rtl"] .hero-eyebrow { letter-spacing: 0; }
 
     .hero h1 {
-      font-size: clamp(40px, 6vw, 64px);
-      line-height: 1.1;
+      font-size: clamp(38px, 5.5vw, 60px);
+      line-height: 1.08;
       margin: 0 0 20px;
       font-weight: 700;
-      background: linear-gradient(135deg, #fff 0%, #b6b8d4 100%);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      letter-spacing: -0.03em;
+      color: var(--text);
     }
+    body[dir="rtl"] .hero h1 { letter-spacing: 0; }
+
     .hero p.lede {
-      font-size: clamp(17px, 2vw, 20px);
+      font-size: clamp(16px, 1.8vw, 18px);
       color: var(--text-dim);
-      max-width: 640px;
-      margin: 0 auto 32px;
+      max-width: 600px;
+      margin: 0 auto 36px;
+      line-height: 1.7;
     }
 
     .cta-row {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       justify-content: center;
       flex-wrap: wrap;
     }
+
     .btn {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
-      padding: 12px 20px;
-      border-radius: 10px;
-      font-size: 15px;
+      gap: 7px;
+      padding: 11px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
       font-weight: 600;
-      transition: transform 0.15s, box-shadow 0.15s;
+      transition: transform 0.15s, box-shadow 0.15s, background 0.15s;
       cursor: pointer;
       border: 0;
+      letter-spacing: -0.01em;
     }
     .btn-primary {
-      background: linear-gradient(135deg, var(--accent), #5a3eff);
+      background: var(--accent);
       color: #fff;
-      box-shadow: 0 8px 24px rgba(124, 92, 255, 0.35);
+      box-shadow: 0 2px 8px rgba(91, 81, 245, 0.28), 0 1px 2px rgba(91, 81, 245, 0.2);
     }
-    .btn-primary:hover { transform: translateY(-1px); text-decoration: none; }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(91, 81, 245, 0.3);
+      text-decoration: none;
+    }
     .btn-ghost {
       background: var(--bg-card);
       color: var(--text);
       border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
     }
-    .btn-ghost:hover { border-color: var(--accent); text-decoration: none; }
+    .btn-ghost:hover {
+      border-color: #c4c4be;
+      background: var(--bg-subtle);
+      text-decoration: none;
+    }
 
     /* Sections */
-    section { padding-block: 56px; }
+    section { padding-block: 64px; }
+    section + section { border-top: 1px solid var(--border-light); }
+
+    .section-header { margin-bottom: 36px; }
+
     h2.section-title {
-      font-size: clamp(26px, 3vw, 34px);
+      font-size: clamp(24px, 2.8vw, 30px);
       font-weight: 700;
-      margin: 0 0 8px;
+      margin: 0 0 6px;
+      letter-spacing: -0.02em;
+      color: var(--text);
     }
     p.section-sub {
       color: var(--text-dim);
-      margin: 0 0 32px;
-      font-size: 16px;
+      margin: 0;
+      font-size: 15px;
     }
 
     /* Install card */
@@ -193,11 +248,12 @@
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
     }
     .tabs {
       display: flex;
-      gap: 4px;
+      gap: 3px;
       margin-bottom: 16px;
       flex-wrap: wrap;
     }
@@ -205,65 +261,113 @@
       background: transparent;
       border: 1px solid transparent;
       color: var(--text-dim);
-      padding: 8px 14px;
-      border-radius: 8px;
+      padding: 6px 13px;
+      border-radius: 6px;
       font-size: 13px;
       font-weight: 500;
       cursor: pointer;
       font-family: inherit;
+      transition: color 0.15s, background 0.15s, border-color 0.15s;
     }
+    .tab:hover { color: var(--text); background: var(--bg-subtle); }
     .tab.active {
-      background: var(--bg-elev);
+      background: var(--bg-subtle);
       border-color: var(--border);
       color: var(--text);
     }
     pre.code {
-      background: #07070b;
+      background: #fafaf8;
       border: 1px solid var(--border);
-      border-radius: 10px;
+      border-radius: var(--radius-sm);
       padding: 18px 20px;
       margin: 0;
       overflow-x: auto;
       direction: ltr;
       text-align: left;
     }
-    pre.code code { color: #d4d6e8; }
-    .tok-comment { color: #5e6178; }
-    .tok-cmd { color: var(--accent-2); }
-    .tok-flag { color: var(--warn); }
+    pre.code code {
+      color: var(--text);
+      background: none;
+      border: none;
+      padding: 0;
+      font-size: 0.875rem;
+      line-height: 1.75;
+    }
+    .tok-comment { color: var(--text-muted); font-style: italic; }
+    .tok-cmd { color: var(--accent); font-weight: 500; }
+    .tok-flag { color: var(--accent-2); }
 
     /* Commands grid */
     .grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 16px;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 14px;
     }
     .card {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 22px;
-      transition: border-color 0.2s, transform 0.2s;
+      box-shadow: var(--shadow-sm);
+      transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
     }
-    .card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .card:hover {
+      border-color: rgba(91, 81, 245, 0.35);
+      box-shadow: var(--shadow), 0 0 0 3px rgba(91, 81, 245, 0.06);
+      transform: translateY(-2px);
+    }
     .card-cmd {
       font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      color: var(--accent-2);
-      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 9px;
       font-weight: 500;
+      background: none;
+      border: none;
+      padding: 0;
     }
     .card-desc {
       color: var(--text-dim);
       font-size: 14px;
       margin: 0;
+      line-height: 1.6;
     }
+    .card-desc code { font-size: 0.85em; }
+
+    /* Severity legend */
+    .legend {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 24px;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 6px 13px;
+      border-radius: 999px;
+      font-size: 13px;
+      color: var(--text-dim);
+      box-shadow: var(--shadow-sm);
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dot.breaking { background: var(--danger); }
+    .dot.degraded { background: var(--warn); }
+    .dot.cosmetic { background: var(--accent); }
 
     /* Coverage list */
     .coverage {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 10px 24px;
+      gap: 10px 28px;
       list-style: none;
       padding: 0;
       margin: 0;
@@ -273,60 +377,40 @@
       align-items: flex-start;
       gap: 10px;
       color: var(--text);
-      font-size: 15px;
+      font-size: 14.5px;
+      line-height: 1.55;
+      padding-block: 3px;
     }
     .check {
       flex: 0 0 auto;
-      width: 20px; height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
-      background: rgba(77, 210, 156, 0.15);
+      background: rgba(22, 163, 74, 0.1);
       color: var(--ok);
-      display: grid; place-items: center;
-      font-size: 12px; font-weight: 700;
+      display: grid;
+      place-items: center;
+      font-size: 10px;
+      font-weight: 700;
       margin-top: 2px;
     }
-
-    /* Severity legend */
-    .legend {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-top: 24px;
-    }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      padding: 8px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      color: var(--text-dim);
-    }
-    .dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-    }
-    .dot.breaking { background: var(--danger); }
-    .dot.degraded { background: var(--warn); }
-    .dot.cosmetic { background: var(--accent); }
 
     /* Footer */
     footer {
       border-top: 1px solid var(--border);
       padding-block: 32px;
-      margin-top: 60px;
+      margin-top: 48px;
       text-align: center;
-      color: var(--text-dim);
-      font-size: 14px;
+      color: var(--text-muted);
+      font-size: 13.5px;
     }
-    footer a { color: var(--text); }
+    footer a { color: var(--text-dim); }
+    footer a:hover { color: var(--text); text-decoration: none; }
 
     /* Responsive */
-    @media (max-width: 600px) {
-      .hero { padding-block: 56px 40px; }
-      .nav-links a:not(.lang-toggle) { display: none; }
+    @media (max-width: 640px) {
+      .hero { padding-block: 60px 48px; }
+      .nav-links a:not(.lang-toggle):not([id]) { display: none; }
     }
   </style>
 </head>
@@ -361,8 +445,10 @@
 
   <section id="install">
     <div class="container">
-      <h2 class="section-title" data-i18n="install.title">Install</h2>
-      <p class="section-sub" data-i18n="install.sub">One command per agent. The skill drops into your agent's skills directory.</p>
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="install.title">Install</h2>
+        <p class="section-sub" data-i18n="install.sub">One command per agent. The skill drops into your agent's skills directory.</p>
+      </div>
 
       <div class="install-card">
         <div class="tabs" role="tablist">
@@ -401,8 +487,10 @@
 
   <section id="commands">
     <div class="container">
-      <h2 class="section-title" data-i18n="commands.title">Commands</h2>
-      <p class="section-sub" data-i18n="commands.sub">All commands also work as natural language — "audit this for RTL issues", "rtlize this component".</p>
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="commands.title">Commands</h2>
+        <p class="section-sub" data-i18n="commands.sub">All commands also work as natural language — "audit this for RTL issues", "rtlize this component".</p>
+      </div>
 
       <div class="grid">
         <div class="card">
@@ -424,17 +512,19 @@
       </div>
 
       <div class="legend">
-        <span class="pill"><span class="dot breaking"></span> 🛑 <span data-i18n="sev.breaking">Breaking</span></span>
-        <span class="pill"><span class="dot degraded"></span> 🔶 <span data-i18n="sev.degraded">Degraded</span></span>
-        <span class="pill"><span class="dot cosmetic"></span> 🔹 <span data-i18n="sev.cosmetic">Cosmetic</span></span>
+        <span class="pill"><span class="dot breaking"></span> <span data-i18n="sev.breaking">Breaking</span></span>
+        <span class="pill"><span class="dot degraded"></span> <span data-i18n="sev.degraded">Degraded</span></span>
+        <span class="pill"><span class="dot cosmetic"></span> <span data-i18n="sev.cosmetic">Cosmetic</span></span>
       </div>
     </div>
   </section>
 
   <section id="coverage">
     <div class="container">
-      <h2 class="section-title" data-i18n="coverage.title">What it covers</h2>
-      <p class="section-sub" data-i18n="coverage.sub">Arabic-language UI specifically. Other RTL scripts have different typography rules and aren't supported.</p>
+      <div class="section-header">
+        <h2 class="section-title" data-i18n="coverage.title">What it covers</h2>
+        <p class="section-sub" data-i18n="coverage.sub">Arabic-language UI specifically. Other RTL scripts have different typography rules and aren't supported.</p>
+      </div>
 
       <ul class="coverage">
         <li><span class="check">✓</span> <span data-i18n="cov.1">CSS logical properties (<code>inline-start/end</code>)</span></li>
